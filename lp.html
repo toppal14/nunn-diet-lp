@@ -107,13 +107,93 @@
     .fv-cutout { height: 540px; }
   }
 
-  .gift { background: #fff; padding: 36px 24px; text-align: center; border-top: 1px solid #ead9c5; border-bottom: 1px solid #ead9c5; }
-  .gift .tag { display: inline-block; font-size: 12px; letter-spacing: 0.25em; color: #b8764d; border: 1px solid #d4a37c; padding: 6px 16px; border-radius: 20px; margin-bottom: 18px; }
-  .gift h2 { font-size: 23px; font-weight: 500; margin-bottom: 18px; color: #4a3329; }
-  .gift ul { list-style: none; text-align: left; max-width: 420px; margin: 0 auto 24px; }
-  .gift li { padding: 14px 16px 14px 48px; margin-bottom: 10px; background: #faf4ec; border-radius: 8px; position: relative; font-size: 15px; line-height: 1.7; }
-  .gift li::before { content: "🎁"; position: absolute; left: 16px; top: 14px; }
-  .gift li strong { display: block; color: #b8764d; font-size: 14px; margin-bottom: 4px; }
+  .gift { background: #fff; padding: 44px 22px 30px; text-align: center; border-top: 1px solid #ead9c5; border-bottom: 1px solid #ead9c5; }
+  .gift .tag { display: inline-block; font-size: 12px; letter-spacing: 0.25em; color: #b8764d; border: 1px solid #d4a37c; padding: 6px 16px; border-radius: 20px; margin-bottom: 14px; }
+  .gift h2 { font-size: 24px; font-weight: 500; margin-bottom: 8px; color: #4a3329; }
+  .gift .gift-sub { font-size: 13px; color: #8a7569; margin-bottom: 28px; font-family: "Hiragino Sans", sans-serif; }
+
+  .gift-cards { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; max-width: 540px; margin: 0 auto; }
+  .gift-card {
+    flex: 1 1 230px; max-width: 250px; min-width: 0;
+    background: #faf4ec; border-radius: 14px;
+    padding: 16px 14px 18px; position: relative;
+    box-shadow: 0 6px 20px rgba(120,80,50,0.08);
+    border: 1px solid #f0e2d0;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .gift-card:hover { transform: translateY(-3px); box-shadow: 0 10px 28px rgba(120,80,50,0.14); }
+  .gift-badge {
+    position: absolute; top: -12px; left: 50%; transform: translateX(-50%);
+    background: linear-gradient(135deg, #d4a37c, #b8764d);
+    color: #fff; font-size: 12px; font-weight: bold;
+    padding: 5px 16px; border-radius: 16px;
+    letter-spacing: 0.1em; font-family: "Hiragino Sans", sans-serif;
+    box-shadow: 0 4px 10px rgba(184,118,77,0.3); white-space: nowrap;
+  }
+  .gift-cover {
+    width: 100%; aspect-ratio: 1 / 1; border-radius: 10px;
+    overflow: hidden; margin-top: 10px; margin-bottom: 14px;
+    background: #fffdf9;
+    box-shadow: 0 4px 14px rgba(120,80,50,0.12);
+  }
+  .gift-cover img {
+    width: 100%; height: 100%; object-fit: cover;
+    transition: transform 0.4s ease;
+  }
+  .gift-card:hover .gift-cover img { transform: scale(1.04); }
+
+  /* placeholder cover for present 2 */
+  .gift-cover-placeholder {
+    background: linear-gradient(135deg, #f8d4cc 0%, #fbe5d6 50%, #f0c4b6 100%);
+    position: relative; padding: 8px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .placeholder-inner {
+    width: 100%; height: 100%; border-radius: 6px;
+    background: rgba(255,253,249,0.35);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    position: relative; padding: 12px;
+  }
+  .ph-tag {
+    background: #e8918a; color: #fff;
+    font-size: 11px; font-weight: bold; padding: 3px 10px; border-radius: 4px;
+    letter-spacing: 0.05em; margin-bottom: 6px;
+    font-family: "Hiragino Sans", sans-serif;
+  }
+  .ph-title {
+    font-family: "Hiragino Sans", sans-serif; font-weight: 900;
+    color: #3a2520; font-size: 22px; line-height: 1.15; text-align: center;
+    margin-bottom: 8px;
+  }
+  .ph-pop {
+    background: #e8918a; color: #fff; border-radius: 50%;
+    width: 56px; height: 56px;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    font-family: "Hiragino Sans", sans-serif; font-weight: bold;
+    font-size: 11px; line-height: 1; box-shadow: 0 3px 8px rgba(232,145,138,0.35);
+  }
+  .ph-pop span { font-size: 16px; margin-top: 2px; }
+  .ph-deco {
+    position: absolute; top: 8px; right: 12px;
+    color: #e8918a; font-size: 16px; opacity: 0.7;
+  }
+
+  .gift-card-title {
+    font-size: 16px; font-weight: 600; line-height: 1.5;
+    color: #4a3329; margin-bottom: 8px;
+    font-family: "Hiragino Sans", sans-serif;
+  }
+  .gift-card-desc {
+    font-size: 12px; line-height: 1.7; color: #6b5548;
+    font-family: "Hiragino Sans", sans-serif;
+  }
+  @media (max-width: 480px) {
+    .gift-cards { gap: 10px; }
+    .gift-card { padding: 14px 10px 14px; }
+    .gift-card-title { font-size: 14.5px; }
+    .gift-card-desc { font-size: 11.5px; }
+    .ph-title { font-size: 19px; }
+  }
 
   .cta-wrap { padding: 10px 24px 40px; text-align: center; background: #fff; }
   .cta { display: inline-block; background: linear-gradient(135deg, #4ac05c 0%, #06c755 100%); color: #fff !important; font-weight: bold; padding: 20px 40px; border-radius: 60px; font-size: 18px; letter-spacing: 0.1em; box-shadow: 0 8px 20px rgba(6,199,85,0.25); font-family: "Hiragino Sans", sans-serif; width: 100%; max-width: 420px; transition: transform 0.2s; }
@@ -565,10 +645,32 @@
   <section class="gift">
     <span class="tag">LINE 限定 PRESENT</span>
     <h2>ご登録で、2大プレゼント</h2>
-    <ul>
-      <li><strong>特典①</strong>1ヶ月半で−5kg。<br>私が毎日やっていたダイエット習慣</li>
-      <li><strong>特典②</strong>リピ殺到！<br>人気のデトックススープレシピ3選</li>
-    </ul>
+    <p class="gift-sub">登録するだけで、すぐに受け取れます</p>
+
+    <div class="gift-cards">
+      <div class="gift-card">
+        <div class="gift-badge">特典 ①</div>
+        <div class="gift-cover">
+          <img src="images/present1.png" alt="頑張らずに5キロ痩せた習慣 5選">
+        </div>
+        <h3 class="gift-card-title">1ヶ月半で−5kg<br>私のダイエット習慣 5選</h3>
+        <p class="gift-card-desc">糖質制限なし・激しい運動なし。<br>私が"実際にやってよかった"だけを厳選。</p>
+      </div>
+
+      <div class="gift-card">
+        <div class="gift-badge">特典 ②</div>
+        <div class="gift-cover gift-cover-placeholder">
+          <div class="placeholder-inner">
+            <div class="ph-tag">リピ殺到</div>
+            <div class="ph-title">デトックス<br>スープ</div>
+            <div class="ph-pop">レシピ<span>3選</span></div>
+            <div class="ph-deco">♡</div>
+          </div>
+        </div>
+        <h3 class="gift-card-title">リピ殺到！<br>デトックススープレシピ 3選</h3>
+        <p class="gift-card-desc">作り置きOK・5分で完成。<br>朝飲むだけで、お腹がスッキリ。</p>
+      </div>
+    </div>
   </section>
   <div class="cta-wrap">
     <a href="https://line.me/R/ti/p/%40514uqhsp" class="cta">LINEで無料プレゼントを受け取る</a>
