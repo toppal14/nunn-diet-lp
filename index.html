@@ -448,6 +448,52 @@
   }
   .client-block { margin-bottom: 56px; }
   .client-block .phone-row { margin-bottom: 0; }
+
+  /* Feature client (Takahashi) */
+  .feature-client { max-width: 540px; margin: 0 auto 64px; }
+  .feature-img { border-radius: 14px; overflow: hidden; box-shadow: 0 14px 36px rgba(120,80,50,0.18); }
+  .feature-img img { width: 100%; height: auto; display: block; }
+  .feature-graph {
+    margin-top: 18px;
+    background: linear-gradient(180deg, #fffdf9 0%, #faf4ec 100%);
+    border: 1px solid #ead9c5; border-radius: 12px;
+    padding: 22px 18px 16px;
+    box-shadow: 0 6px 20px rgba(120,80,50,0.08);
+  }
+  .fg-head { text-align: center; margin-bottom: 10px; }
+  .fg-label { display: block; font-size: 12px; letter-spacing: 0.25em; color: #b8764d; font-family: "Playfair Display", serif; }
+  .fg-sub { display: block; font-size: 11px; color: #a8907d; margin-top: 2px; font-family: sans-serif; }
+  .feature-graph svg { width: 100%; height: auto; display: block; }
+  .fg-line {
+    fill: none; stroke: #b8764d; stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round;
+    stroke-dasharray: 600; stroke-dashoffset: 600;
+  }
+  .fg-area { fill: url(#grad); opacity: 0; }
+  .fg-dots circle { opacity: 0; }
+  .feature-client.in-view .fg-line { animation: drawLine 2.4s cubic-bezier(0.4,0,0.2,1) forwards; }
+  .feature-client.in-view .fg-area { animation: fadeArea 1.4s ease-out 1s forwards; }
+  .feature-client.in-view .fg-dots circle:nth-child(1) { animation: popDot 0.4s ease-out 0.2s forwards; }
+  .feature-client.in-view .fg-dots circle:nth-child(2) { animation: popDot 0.4s ease-out 1.0s forwards; }
+  .feature-client.in-view .fg-dots circle:nth-child(3) { animation: popDot 0.4s ease-out 1.6s forwards; }
+  .feature-client.in-view .fg-dots circle:nth-child(4) { animation: popDot 0.5s ease-out 2.2s forwards; }
+  @keyframes popDot { 0% { opacity: 0; transform: scale(0.3); transform-box: fill-box; transform-origin: center; } 100% { opacity: 1; transform: scale(1); } }
+  .fg-stats {
+    display: flex; gap: 8px; align-items: stretch; margin-top: 14px;
+    padding-top: 14px; border-top: 1px solid rgba(184,118,77,0.2);
+  }
+  .fg-stats .stat {
+    flex: 1; text-align: center; min-width: 0;
+  }
+  .fg-stats .stat.arrow {
+    flex: 0 0 24px; display: flex; align-items: center; justify-content: center;
+    color: #b8764d; font-size: 22px; font-family: serif;
+  }
+  .fg-stats .stat.down { background: #b8764d; color: #fff; border-radius: 8px; padding: 6px 4px; }
+  .fg-stats .stat.down .l { color: rgba(255,253,249,0.85); }
+  .fg-stats .stat.down .v { color: #fff; }
+  .fg-stats .l { font-size: 10px; letter-spacing: 0.15em; color: #8a6f5c; }
+  .fg-stats .v { font-family: "Playfair Display", serif; font-size: 22px; color: #b8764d; font-weight: 600; margin-top: 2px; }
+  .fg-stats .v small { font-size: 12px; }
   .voice-card {
     max-width: 460px; margin: 22px auto 0;
     background: #faf4ec; border-left: 3px solid #d4a37c;
@@ -921,7 +967,51 @@
       }
     ];
     var html = '';
-    for (var i = 1; i <= 7; i++) {
+
+    // CLIENT 01 — Takahashi (feature layout: real labeled image + animated graph)
+    html += '<div class="client-block feature-client" data-client="1">' +
+      '<div class="client-label"><span class="bar"></span>CLIENT 01<span class="bar"></span></div>' +
+      '<div class="feature-img"><img src="images/takahashi.jpg" alt="高橋さん Before / After"></div>' +
+      '<div class="feature-graph">' +
+        '<div class="fg-head">' +
+          '<span class="fg-label">W E I G H T &nbsp; L O G</span>' +
+          '<span class="fg-sub">4ヶ月の体重推移</span>' +
+        '</div>' +
+        '<svg viewBox="0 0 400 180" preserveAspectRatio="none">' +
+          '<line x1="30" y1="30"  x2="385" y2="30"  stroke="#ead9c5" stroke-dasharray="3,3"/>' +
+          '<line x1="30" y1="80"  x2="385" y2="80"  stroke="#ead9c5" stroke-dasharray="3,3"/>' +
+          '<line x1="30" y1="130" x2="385" y2="130" stroke="#ead9c5" stroke-dasharray="3,3"/>' +
+          '<text x="22" y="34" font-size="9" fill="#a8907d" text-anchor="end" font-family="sans-serif">75</text>' +
+          '<text x="22" y="84" font-size="9" fill="#a8907d" text-anchor="end" font-family="sans-serif">70</text>' +
+          '<text x="22" y="134" font-size="9" fill="#a8907d" text-anchor="end" font-family="sans-serif">65</text>' +
+          '<path class="fg-area" d="M40,42 Q120,55 180,75 T280,115 T380,140 L380,160 L40,160 Z"/>' +
+          '<path class="fg-line" d="M40,42 Q120,55 180,75 T280,115 T380,140"/>' +
+          '<g class="fg-dots">' +
+            '<circle cx="40"  cy="42"  r="4.5" fill="#b8764d"/>' +
+            '<circle cx="180" cy="75"  r="3"   fill="#d4a37c"/>' +
+            '<circle cx="280" cy="115" r="3"   fill="#d4a37c"/>' +
+            '<circle cx="380" cy="140" r="5"   fill="#fff" stroke="#b8764d" stroke-width="2.5"/>' +
+          '</g>' +
+          '<text x="40"  y="22" font-size="10" fill="#4a3329" text-anchor="middle" font-family="serif" font-weight="bold">72.3kg</text>' +
+          '<text x="380" y="160" font-size="10" fill="#b8764d" text-anchor="middle" font-family="serif" font-weight="bold">64.9kg</text>' +
+        '</svg>' +
+        '<div class="fg-stats">' +
+          '<div class="stat"><div class="l">START</div><div class="v">72.3<small>kg</small></div></div>' +
+          '<div class="stat arrow">→</div>' +
+          '<div class="stat"><div class="l">GOAL</div><div class="v">64.9<small>kg</small></div></div>' +
+          '<div class="stat down"><div class="l">DOWN</div><div class="v">−7.4<small>kg</small></div></div>' +
+        '</div>' +
+      '</div>' +
+      '<div class="voice-card">' +
+        '<div class="voice-quote">' +
+          '<p class="voice-why"><span class="qmark">&ldquo;</span>' + voices[0].why + '</p>' +
+          '<p class="voice-future">' + voices[0].future + '<span class="qmark r">&rdquo;</span></p>' +
+        '</div>' +
+        '<p class="voice-meta">— CLIENT 01 / 高橋さん（169cm・' + voices[0].age + '）</p>' +
+      '</div>' +
+    '</div>';
+
+    for (var i = 2; i <= 7; i++) {
       var num = ('0' + i).slice(-2);
       var v = voices[i-1];
       html += '<div class="client-block">' +
@@ -964,6 +1054,20 @@
       '</div>';
     }
     container.innerHTML = html;
+  })();
+
+  // Feature client graph trigger on scroll
+  (function(){
+    setTimeout(function(){
+      var el = document.querySelector('.feature-client');
+      if (!el) return;
+      var io = new IntersectionObserver(function(entries){
+        entries.forEach(function(e){
+          if (e.isIntersecting) { el.classList.add('in-view'); io.disconnect(); }
+        });
+      }, { threshold: 0.3 });
+      io.observe(el);
+    }, 50);
   })();
 
   // Parallax scroll
