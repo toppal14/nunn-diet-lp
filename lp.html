@@ -929,144 +929,100 @@
   (function(){
     var container = document.getElementById('clients');
     if (!container) return;
-    var voices = [
+    var clients = [
       {
+        img: 'images/takahashi.jpg', height: 169, start: 72.3, end: 64.9, down: 7.4,
         age: '30代・お子さんあり',
         why: 'ジムも糖質制限も全部"ひとり"で挫折してきた私が、ぬんさんに毎日見守ってもらえたから、初めて4ヶ月走り切れた。',
         future: '子どもとの写真に、自分が笑って写ってる。それだけで、毎日が幸せです。'
       },
       {
+        img: 'images/client2.jpg', height: 157, start: 72.0, end: 63.0, down: 9.0,
         age: '40代・夫婦二人暮らし',
         why: '他のダイエットは"我慢"だったけど、ぬんさんは"食べ方"を教えてくれた。お米を抜かずに痩せられるなんて思わなかった。',
         future: '夫から"なんか綺麗になったね"と言われたとき、涙が出ました。'
       },
       {
+        img: 'images/client3.jpg', height: 162, start: 86.4, end: 76.1, down: 10.3,
         age: '30代・経営者',
         why: '数字より"体の声"を大事にする指導が衝撃でした。エステも痩身も、ここまで根本から変えてくれなかった。',
         future: '生理痛で寝込まなくなって、仕事が止まらない。月10日損してた人生が、戻ってきました。'
       },
       {
+        img: 'images/client4.jpg', height: 166, start: 65.5, end: 57.5, down: 8.0,
         age: '40代・ワーママ',
         why: 'AIや自動配信じゃない、ぬんさんの"その日のフィードバック"が私には必要でした。',
         future: '何を着てもサマになる。お洋服選びが、また楽しくなった毎日。'
       },
       {
+        img: 'images/client5.jpg', height: 148, start: 52.7, end: 47.4, down: 5.3,
         age: '50代',
         why: '何度もリバウンドしてきた私に、"知識を一生もの"にしてくれたのがぬんさんだけ。',
         future: '孫と長く歩ける体になりたかった。叶いました。'
-      },
-      {
-        age: '30代・婚活中',
-        why: '我流ファスティングで肌も心もボロボロだったのを、根本から作り直してくれた。',
-        future: 'ノーファンデで外に出られる肌に。鏡の前で、自分を好きになれた。'
-      },
-      {
-        age: '30代・子育て中',
-        why: 'ぬんさんは食事だけじゃなく、心の整え方まで教えてくれる。"なんでそれを食べた方がいいか"を全部理解できた。',
-        future: '子どもにイライラしない自分。家がやっと、笑顔で満ちました。'
       }
     ];
     var html = '';
-
-    // CLIENT 01 — Takahashi (feature layout: real labeled image + animated graph)
-    html += '<div class="client-block feature-client" data-client="1">' +
-      '<div class="client-label"><span class="bar"></span>CLIENT 01<span class="bar"></span></div>' +
-      '<div class="feature-img"><img src="images/takahashi.jpg" alt="高橋さん Before / After"></div>' +
-      '<div class="feature-graph">' +
-        '<div class="fg-head">' +
-          '<span class="fg-label">W E I G H T &nbsp; L O G</span>' +
-          '<span class="fg-sub">4ヶ月の体重推移</span>' +
-        '</div>' +
-        '<svg viewBox="0 0 400 180" preserveAspectRatio="none">' +
-          '<line x1="30" y1="30"  x2="385" y2="30"  stroke="#ead9c5" stroke-dasharray="3,3"/>' +
-          '<line x1="30" y1="80"  x2="385" y2="80"  stroke="#ead9c5" stroke-dasharray="3,3"/>' +
-          '<line x1="30" y1="130" x2="385" y2="130" stroke="#ead9c5" stroke-dasharray="3,3"/>' +
-          '<text x="22" y="34" font-size="9" fill="#a8907d" text-anchor="end" font-family="sans-serif">75</text>' +
-          '<text x="22" y="84" font-size="9" fill="#a8907d" text-anchor="end" font-family="sans-serif">70</text>' +
-          '<text x="22" y="134" font-size="9" fill="#a8907d" text-anchor="end" font-family="sans-serif">65</text>' +
-          '<path class="fg-area" d="M40,42 Q120,55 180,75 T280,115 T380,140 L380,160 L40,160 Z"/>' +
-          '<path class="fg-line" d="M40,42 Q120,55 180,75 T280,115 T380,140"/>' +
-          '<g class="fg-dots">' +
-            '<circle cx="40"  cy="42"  r="4.5" fill="#b8764d"/>' +
-            '<circle cx="180" cy="75"  r="3"   fill="#d4a37c"/>' +
-            '<circle cx="280" cy="115" r="3"   fill="#d4a37c"/>' +
-            '<circle cx="380" cy="140" r="5"   fill="#fff" stroke="#b8764d" stroke-width="2.5"/>' +
-          '</g>' +
-          '<text x="40"  y="22" font-size="10" fill="#4a3329" text-anchor="middle" font-family="serif" font-weight="bold">72.3kg</text>' +
-          '<text x="380" y="160" font-size="10" fill="#b8764d" text-anchor="middle" font-family="serif" font-weight="bold">64.9kg</text>' +
-        '</svg>' +
-        '<div class="fg-stats">' +
-          '<div class="stat"><div class="l">START</div><div class="v">72.3<small>kg</small></div></div>' +
-          '<div class="stat arrow">→</div>' +
-          '<div class="stat"><div class="l">GOAL</div><div class="v">64.9<small>kg</small></div></div>' +
-          '<div class="stat down"><div class="l">DOWN</div><div class="v">−7.4<small>kg</small></div></div>' +
-        '</div>' +
-      '</div>' +
-      '<div class="voice-card">' +
-        '<div class="voice-quote">' +
-          '<p class="voice-why"><span class="qmark">&ldquo;</span>' + voices[0].why + '</p>' +
-          '<p class="voice-future">' + voices[0].future + '<span class="qmark r">&rdquo;</span></p>' +
-        '</div>' +
-        '<p class="voice-meta">— CLIENT 01 / 高橋さん（169cm・' + voices[0].age + '）</p>' +
-      '</div>' +
-    '</div>';
-
-    for (var i = 2; i <= 7; i++) {
-      var num = ('0' + i).slice(-2);
-      var v = voices[i-1];
-      html += '<div class="client-block">' +
+    clients.forEach(function(c, idx){
+      var num = ('0' + (idx+1)).slice(-2);
+      // Map weight range to graph y coordinates (160 height, padded)
+      // Top ≈ start kg, bottom ≈ end kg. Use 30..150 range.
+      var yTop = 30, yBot = 150;
+      // Y label values: 3 grid lines at start, mid, end
+      var midKg = ((c.start + c.end) / 2).toFixed(1);
+      html += '<div class="client-block feature-client">' +
         '<div class="client-label"><span class="bar"></span>CLIENT ' + num + '<span class="bar"></span></div>' +
-        '<div class="phone-row">' +
-          '<div class="phone ba-phone">' +
-            '<div class="phone-screen">' +
-              '<div class="ba-labels"><span class="b">BEFORE</span><span class="a">AFTER</span></div>' +
-              '<div class="ba-composite"><img src="images/ba/p' + i + '.png" alt="Client ' + num + '"></div>' +
-            '</div>' +
+        '<div class="feature-img"><img src="' + c.img + '" alt="CLIENT ' + num + ' Before / After"></div>' +
+        '<div class="feature-graph">' +
+          '<div class="fg-head">' +
+            '<span class="fg-label">W E I G H T &nbsp; L O G</span>' +
+            '<span class="fg-sub">4ヶ月の体重推移</span>' +
           '</div>' +
-          '<div class="phone mini-graph-phone">' +
-            '<div class="phone-screen">' +
-              '<div class="graph-title">W E I G H T &nbsp; L O G</div>' +
-              '<div class="graph-sub">4ヶ月の記録</div>' +
-              '<svg viewBox="0 0 200 160" preserveAspectRatio="none">' +
-                '<line x1="15" y1="20"  x2="195" y2="20"  stroke="#ead9c5" stroke-dasharray="2,3"/>' +
-                '<line x1="15" y1="70"  x2="195" y2="70"  stroke="#ead9c5" stroke-dasharray="2,3"/>' +
-                '<line x1="15" y1="120" x2="195" y2="120" stroke="#ead9c5" stroke-dasharray="2,3"/>' +
-                '<path class="graph-area" d="M20,28 Q60,38 85,55 T135,100 T185,138 L185,155 L20,155 Z"/>' +
-                '<path class="graph-line" d="M20,28 Q60,38 85,55 T135,100 T185,138"/>' +
-                '<circle cx="20" cy="28" r="3" fill="#b8764d"/>' +
-                '<circle cx="185" cy="138" r="3.5" fill="#fff" stroke="#b8764d" stroke-width="2"/>' +
-              '</svg>' +
-              '<div class="graph-stats">' +
-                '<div class="stat"><div class="l">START</div><div class="v">70<small>kg</small></div></div>' +
-                '<div class="stat"><div class="l">GOAL</div><div class="v">50<small>kg</small></div></div>' +
-                '<div class="stat"><div class="l">DOWN</div><div class="v">−20<small>kg</small></div></div>' +
-              '</div>' +
-            '</div>' +
+          '<svg viewBox="0 0 400 180" preserveAspectRatio="none">' +
+            '<line x1="30" y1="30"  x2="385" y2="30"  stroke="#ead9c5" stroke-dasharray="3,3"/>' +
+            '<line x1="30" y1="90"  x2="385" y2="90"  stroke="#ead9c5" stroke-dasharray="3,3"/>' +
+            '<line x1="30" y1="150" x2="385" y2="150" stroke="#ead9c5" stroke-dasharray="3,3"/>' +
+            '<text x="26" y="34" font-size="9" fill="#a8907d" text-anchor="end" font-family="sans-serif">' + c.start.toFixed(1) + '</text>' +
+            '<text x="26" y="94" font-size="9" fill="#a8907d" text-anchor="end" font-family="sans-serif">' + midKg + '</text>' +
+            '<text x="26" y="154" font-size="9" fill="#a8907d" text-anchor="end" font-family="sans-serif">' + c.end.toFixed(1) + '</text>' +
+            '<path class="fg-area" d="M40,30 Q120,42 180,68 T280,118 T380,150 L380,170 L40,170 Z"/>' +
+            '<path class="fg-line" d="M40,30 Q120,42 180,68 T280,118 T380,150"/>' +
+            '<g class="fg-dots">' +
+              '<circle cx="40"  cy="30"  r="4.5" fill="#b8764d"/>' +
+              '<circle cx="180" cy="68"  r="3"   fill="#d4a37c"/>' +
+              '<circle cx="280" cy="118" r="3"   fill="#d4a37c"/>' +
+              '<circle cx="380" cy="150" r="5"   fill="#fff" stroke="#b8764d" stroke-width="2.5"/>' +
+            '</g>' +
+          '</svg>' +
+          '<div class="fg-stats">' +
+            '<div class="stat"><div class="l">START</div><div class="v">' + c.start.toFixed(1) + '<small>kg</small></div></div>' +
+            '<div class="stat arrow">→</div>' +
+            '<div class="stat"><div class="l">GOAL</div><div class="v">' + c.end.toFixed(1) + '<small>kg</small></div></div>' +
+            '<div class="stat down"><div class="l">DOWN</div><div class="v">−' + c.down.toFixed(1) + '<small>kg</small></div></div>' +
           '</div>' +
         '</div>' +
         '<div class="voice-card">' +
           '<div class="voice-quote">' +
-            '<p class="voice-why"><span class="qmark">&ldquo;</span>' + v.why + '</p>' +
-            '<p class="voice-future">' + v.future + '<span class="qmark r">&rdquo;</span></p>' +
+            '<p class="voice-why"><span class="qmark">&ldquo;</span>' + c.why + '</p>' +
+            '<p class="voice-future">' + c.future + '<span class="qmark r">&rdquo;</span></p>' +
           '</div>' +
-          '<p class="voice-meta">— CLIENT ' + num + ' / ' + v.age + '</p>' +
+          '<p class="voice-meta">— CLIENT ' + num + ' / ' + c.height + 'cm・' + c.age + '</p>' +
         '</div>' +
       '</div>';
-    }
+    });
     container.innerHTML = html;
   })();
 
-  // Feature client graph trigger on scroll
+  // Feature client graph triggers on scroll (each animates independently)
   (function(){
     setTimeout(function(){
-      var el = document.querySelector('.feature-client');
-      if (!el) return;
+      var els = document.querySelectorAll('.feature-client');
+      if (!els.length) return;
       var io = new IntersectionObserver(function(entries){
         entries.forEach(function(e){
-          if (e.isIntersecting) { el.classList.add('in-view'); io.disconnect(); }
+          if (e.isIntersecting) { e.target.classList.add('in-view'); io.unobserve(e.target); }
         });
-      }, { threshold: 0.3 });
-      io.observe(el);
+      }, { threshold: 0.25 });
+      els.forEach(function(el){ io.observe(el); });
     }, 50);
   })();
 
