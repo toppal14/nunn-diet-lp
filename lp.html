@@ -297,10 +297,12 @@
     background: #f5e9dc;
   }
   .parallax-hero {
-    position: absolute; top: -10%; left: 0; right: 0; bottom: -10%;
+    position: absolute; inset: 0;
     background-image: url('images/profile_bloom.jpg');
-    background-size: cover;
+    background-size: contain;
+    background-repeat: no-repeat;
     background-position: center;
+    background-color: #fbecdd;
     will-change: transform;
   }
   /* Scroll-reveal for profile story */
@@ -1134,7 +1136,7 @@
       var progress = (window.innerHeight - rect.top) / (window.innerHeight + rect.height);
       progress = Math.max(0, Math.min(1, progress));
       var shift = (progress - 0.5) * 80;
-      hero.style.transform = 'translateY(' + shift + 'px) scale(1.04)';
+      hero.style.transform = 'translateY(' + shift + 'px)';
     }
     window.addEventListener('scroll', update, { passive: true });
     window.addEventListener('resize', update);
