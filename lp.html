@@ -209,6 +209,28 @@
   .section-tag { text-align: center; font-size: 12px; letter-spacing: 0.35em; color: #b8764d; margin-bottom: 12px; }
   h2.section-title { text-align: center; font-size: 25px; font-weight: 500; margin-bottom: 40px; line-height: 1.6; color: #4a3329; }
   h2.section-title .line { color: #b8764d; }
+  h2.results-title { font-size: 30px; font-weight: 600; letter-spacing: 0.04em; }
+  h2.results-title .shine {
+    display: inline-block;
+    font-size: 36px; font-weight: 700;
+    background: linear-gradient(90deg, #c98a73 0%, #f0c098 25%, #fff5e8 50%, #f0c098 75%, #c98a73 100%);
+    background-size: 200% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 2px 6px rgba(232,184,154,0.5));
+    animation: titleShine 3s ease-in-out infinite;
+    position: relative;
+  }
+  @keyframes titleShine {
+    0%, 100% { background-position: 200% 0; }
+    50% { background-position: 0 0; }
+  }
+  @media (max-width: 480px) {
+    h2.results-title { font-size: 24px; }
+    h2.results-title .shine { font-size: 30px; }
+  }
 
   .worry { background: #f5ece1; }
   .worry-list { max-width: 460px; margin: 0 auto; }
@@ -789,8 +811,7 @@
   </section>
 
   <section class="results">
-    <p class="section-tag">R E S U L T S</p>
-    <h2 class="section-title">受講生さんの、<br><span class="line">リアルな変化</span></h2>
+    <h2 class="section-title results-title">受講生さんの、<br><span class="line shine">リアルな変化</span></h2>
 
     <svg width="0" height="0" style="position:absolute">
       <defs>
