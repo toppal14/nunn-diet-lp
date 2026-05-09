@@ -289,52 +289,28 @@
   .final p { font-size: 15px; color: #5a4538; margin-bottom: 30px; line-height: 2; }
 
   /* Results section with phone mockups */
-  /* Parallax */
+  /* Parallax hero (profile bloom image) */
   .parallax-sec {
-    position: relative; height: 680px; overflow: hidden;
-    background: linear-gradient(180deg, #f5e9dc 0%, #e8c9a8 100%);
+    position: relative; overflow: hidden;
+    aspect-ratio: 3 / 4;
+    width: 100%;
+    background: #f5e9dc;
   }
-  .parallax-bg {
-    position: absolute; inset: 0;
-    background:
-      radial-gradient(circle at 20% 30%, rgba(255,255,255,0.45), transparent 40%),
-      radial-gradient(circle at 80% 70%, rgba(217,152,114,0.35), transparent 50%);
+  .parallax-hero {
+    position: absolute; top: -10%; left: 0; right: 0; bottom: -10%;
+    background-image: url('images/profile_bloom.jpg');
+    background-size: cover;
+    background-position: center;
     will-change: transform;
   }
-  .parallax-word {
-    position: absolute; top: 40%; left: 50%; transform: translate(-50%,-50%);
-    font-family: "Playfair Display", "Times New Roman", serif;
-    font-style: italic; font-size: 22vw; line-height: 1;
-    color: rgba(255,253,249,0.45);
-    letter-spacing: 0.05em;
-    pointer-events: none;
-    will-change: transform;
+  /* Scroll-reveal for profile story */
+  .reveal {
+    opacity: 0; transform: translateY(40px);
+    transition: opacity 1s ease-out, transform 1s ease-out;
   }
-  .parallax-cutout {
-    position: absolute; bottom: 0; left: 50%;
-    transform: translateX(-50%);
-    height: 110%;
-    width: auto; max-width: none;
-    filter: drop-shadow(0 20px 30px rgba(120,80,50,0.25));
-    will-change: transform;
-    z-index: 2;
-  }
-  .parallax-copy {
-    position: absolute; bottom: 40px; left: 50%;
-    transform: translateX(-50%);
-    text-align: center; z-index: 3;
-  }
-  .parallax-copy .tag {
-    font-size: 12px; letter-spacing: 0.25em; color: #fffdf9; margin-bottom: 10px;
-    font-family: sans-serif;
-  }
-  .parallax-copy .lead {
-    font-size: 23px; color: #4a3329; line-height: 1.6;
-    text-shadow: 0 2px 10px rgba(255,253,249,0.6);
-  }
+  .reveal.in-view { opacity: 1; transform: none; }
   @media (max-width: 480px) {
-    .parallax-sec { height: 560px; }
-    .parallax-copy .lead { font-size: 20px; }
+    .parallax-sec { aspect-ratio: 3 / 4; }
   }
 
   /* Sticky bottom CTA */
@@ -948,25 +924,14 @@
       </div>
     </div>
 
-  <!-- Parallax cutout section -->
+  <!-- Parallax hero section -->
   <section class="parallax-sec">
-    <div class="parallax-bg"></div>
-    <div class="parallax-word">BLOOM</div>
-    <img src="images/nunn_cutout.png" alt="ぬん" class="parallax-cutout">
-    <div class="parallax-copy">
-      <p class="tag">— YOUR STORY STARTS HERE —</p>
-      <p class="lead">花のように、<br>あなたも、咲きます。</p>
-    </div>
+    <div class="parallax-hero"></div>
   </section>
 
   <section class="profile">
-    <p class="section-tag">P R O F I L E</p>
-    <h2 class="section-title">はじめまして、<br>ぬんです。</h2>
     <div class="profile-card">
-      <img src="images/nunn_kitchen.jpg" alt="ぬん">
-      <div class="role">DIET COACH</div>
-      <div class="nm">ぬん</div>
-      <div class="profile-story">
+      <div class="profile-story reveal">
         <p>夫大好きな、元公務員・35歳。</p>
         <p>2年前、大好きだった夫に冷められたことをきっかけに、過去最高体重に。職場で「3人目？」と聞かれた日の恥ずかしさは、今も忘れません。</p>
         <p>インスタのレシピ、ジム、痩身エステ──やれることは全部やった。でも、痩せない。肌は荒れる。イライラは加速する。</p>
@@ -974,7 +939,7 @@
         <p>そう気づいてたどり着いたのが、ファスティングと食事改善でした。<strong>1ヶ月半で−5kg。</strong>肌が整い、生理痛が消え、朝が軽くなった。そして──冷めきっていた夫に、私から逆プロポーズ。仲直りができました。</p>
         <p>"自分で自分を幸せにできる"感覚を届けたくて、今、同じように悩む女性のサポートをしています。</p>
       </div>
-      <div class="achievements">
+      <div class="achievements reveal">
         <div class="h">講座生の結果</div>
         <ul>
           <li>医師から減量指導を受けていた方を<strong>−10kg</strong>に導いた</li>
@@ -1159,26 +1124,35 @@
     }, 50);
   })();
 
-  // Parallax scroll
+  // Parallax scroll for profile bloom hero
   (function(){
-    var cutout = document.querySelector('.parallax-cutout');
-    var word = document.querySelector('.parallax-word');
-    var bg = document.querySelector('.parallax-bg');
+    var hero = document.querySelector('.parallax-hero');
     var sec = document.querySelector('.parallax-sec');
-    if (!cutout || !sec) return;
+    if (!hero || !sec) return;
     function update(){
       var rect = sec.getBoundingClientRect();
       var progress = (window.innerHeight - rect.top) / (window.innerHeight + rect.height);
       progress = Math.max(0, Math.min(1, progress));
-      var shift = (progress - 0.5) * 100;
-      var scale = 1 + progress * 0.18;
-      cutout.style.transform = 'translateX(-50%) translateY(' + (-shift * 2.4) + 'px) scale(' + scale + ')';
-      if (word) word.style.transform = 'translate(-50%, calc(-50% + ' + (shift * 3.2) + 'px)) scale(' + (1 + progress * 0.25) + ')';
-      if (bg) bg.style.transform = 'translateY(' + (shift * 1.2) + 'px) scale(' + (1 + progress * 0.15) + ')';
+      var shift = (progress - 0.5) * 80;
+      hero.style.transform = 'translateY(' + shift + 'px) scale(1.04)';
     }
     window.addEventListener('scroll', update, { passive: true });
     window.addEventListener('resize', update);
     update();
+  })();
+  // Reveal-on-scroll for profile story / achievements
+  (function(){
+    var els = document.querySelectorAll('.reveal');
+    if (!els.length || !('IntersectionObserver' in window)) {
+      els.forEach(function(e){ e.classList.add('in-view'); });
+      return;
+    }
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if (e.isIntersecting) { e.target.classList.add('in-view'); io.unobserve(e.target); }
+      });
+    }, { threshold: 0.15 });
+    els.forEach(function(el){ io.observe(el); });
   })();
 
   // Before/After carousel — rotate through people
