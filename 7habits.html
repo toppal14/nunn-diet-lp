@@ -172,76 +172,58 @@
     margin-bottom:6px;
   }
 
-  /* CTA button — rounded, 3D, animated, sparkle */
+  /* CTA button — 3D green with sparkle */
   .cta{
     position:relative;
     display:block;
     text-align:center;
-    background:linear-gradient(135deg,#ff8fa3 0%,#ff5e7e 50%,#e63462 100%);
     color:#fff !important;
     text-decoration:none;
     padding:18px 22px;
-    border-radius:999px;
+    border-radius:14px;
     font-weight:700;
-    font-size:15px;
-    margin:22px 0 6px;
+    font-size:16px;
+    margin:22px 0 10px;
     min-height:58px;
-    box-shadow:0 8px 0 rgba(160,40,72,.35), 0 14px 28px rgba(230,52,98,.32), inset 0 2px 0 rgba(255,255,255,.55), inset 0 -3px 0 rgba(0,0,0,.10);
-    transition:transform .15s ease, box-shadow .15s ease;
     letter-spacing:.04em;
-    overflow:hidden;
-    isolation:isolate;
-    animation:ctaWobble 2.8s ease-in-out infinite;
+    text-shadow:0 1px 2px rgba(0,0,0,.18);
+    background-color:#4cb547;
+    background-image:
+      radial-gradient(circle 1.6px at 14px 14px, #fff 0, rgba(255,255,255,0) 100%),
+      radial-gradient(circle 1.2px at 60px 30px, #fff 0, rgba(255,255,255,0) 100%),
+      radial-gradient(circle 1.8px at 110px 8px, #fff 0, rgba(255,255,255,0) 100%),
+      radial-gradient(circle 1.4px at 160px 36px, #fff 0, rgba(255,255,255,0) 100%),
+      radial-gradient(circle 1.6px at 210px 18px, #fff 0, rgba(255,255,255,0) 100%),
+      radial-gradient(circle 1.2px at 260px 42px, #fff 0, rgba(255,255,255,0) 100%),
+      linear-gradient(110deg, transparent 35%, rgba(255,255,255,.55) 50%, transparent 65%),
+      linear-gradient(180deg,#7fd87a 0%,#4cb547 55%,#3a9a37 100%);
+    background-repeat:repeat-x, repeat-x, repeat-x, repeat-x, repeat-x, repeat-x, no-repeat, no-repeat;
+    background-size:280px 60px, 280px 60px, 280px 60px, 280px 60px, 280px 60px, 280px 60px, 200% 100%, 100% 100%;
+    background-position:0 0, 0 0, 0 0, 0 0, 0 0, 0 0, -120% 0, 0 0;
+    animation:ctaSparkle 2.2s ease-in-out infinite, ctaShine 3.2s ease-in-out infinite;
+    box-shadow:
+      0 6px 0 #2e7a2c,
+      0 8px 18px rgba(46,122,44,.35),
+      inset 0 2px 0 rgba(255,255,255,.55),
+      inset 0 -4px 0 rgba(0,0,0,.10);
+    transition:transform .15s ease, box-shadow .15s ease;
   }
   .cta:hover{
-    transform:translateY(-3px);
-    box-shadow:0 11px 0 rgba(160,40,72,.35), 0 18px 34px rgba(230,52,98,.42), inset 0 2px 0 rgba(255,255,255,.55), inset 0 -3px 0 rgba(0,0,0,.10);
+    transform:translateY(2px);
+    box-shadow:
+      0 3px 0 #2e7a2c,
+      0 5px 12px rgba(46,122,44,.35),
+      inset 0 2px 0 rgba(255,255,255,.55),
+      inset 0 -3px 0 rgba(0,0,0,.10);
   }
-  .cta:active{
-    transform:translateY(3px);
-    box-shadow:0 3px 0 rgba(160,40,72,.35), 0 6px 14px rgba(230,52,98,.3), inset 0 2px 0 rgba(255,255,255,.45), inset 0 -2px 0 rgba(0,0,0,.10);
-  }
-  .cta::after{content:" →"; display:inline-block; margin-left:6px; animation:ctaArrow 1.2s ease-in-out infinite;}
-  /* shine sweep */
-  .cta::before{
-    content:""; position:absolute; top:0; left:-60%; width:50%; height:100%;
-    background:linear-gradient(115deg, transparent 0%, rgba(255,255,255,.55) 50%, transparent 100%);
-    transform:skewX(-20deg);
-    animation:ctaShine 3.2s ease-in-out infinite;
-    pointer-events:none;
-  }
-  /* per-button colors */
-  .cta.c-pink{   background:linear-gradient(135deg,#ffb3c6 0%,#ff5e8a 50%,#d92d61 100%); box-shadow:0 8px 0 rgba(140,30,60,.35), 0 14px 28px rgba(217,45,97,.32), inset 0 2px 0 rgba(255,255,255,.55), inset 0 -3px 0 rgba(0,0,0,.10);}
-  .cta.c-orange{ background:linear-gradient(135deg,#ffd28a 0%,#ff9b3d 50%,#ee6b1c 100%); box-shadow:0 8px 0 rgba(160,80,20,.35), 0 14px 28px rgba(238,107,28,.32), inset 0 2px 0 rgba(255,255,255,.55), inset 0 -3px 0 rgba(0,0,0,.10);}
-  .cta.c-mint{   background:linear-gradient(135deg,#b6f0d4 0%,#3fc59a 50%,#1f9c7a 100%); box-shadow:0 8px 0 rgba(20,90,70,.35), 0 14px 28px rgba(31,156,122,.32), inset 0 2px 0 rgba(255,255,255,.55), inset 0 -3px 0 rgba(0,0,0,.10);}
-  .cta.c-violet{ background:linear-gradient(135deg,#d8b4ff 0%,#a96bff 50%,#7a3ee0 100%); box-shadow:0 8px 0 rgba(70,30,140,.35), 0 14px 28px rgba(122,62,224,.32), inset 0 2px 0 rgba(255,255,255,.55), inset 0 -3px 0 rgba(0,0,0,.10);}
-  .cta.c-gold{   background:linear-gradient(135deg,#ffe7a8 0%,#f4b942 50%,#c8861a 100%); color:#fff !important; box-shadow:0 8px 0 rgba(120,80,20,.35), 0 14px 28px rgba(244,185,66,.4), inset 0 2px 0 rgba(255,255,255,.55), inset 0 -3px 0 rgba(0,0,0,.10);}
-  /* refined glow dots — soft radial highlights, no crosses */
-  .cta .spark{
-    position:absolute; pointer-events:none; opacity:0;
-    width:6px; height:6px; border-radius:50%;
-    background:radial-gradient(circle, rgba(255,255,255,.95) 0%, rgba(255,255,255,.5) 35%, rgba(255,255,255,0) 75%);
-  }
-  .cta .spark.s1{ top:30%; left:14%; animation:glowPulse 3.2s ease-in-out infinite; }
-  .cta .spark.s2{ top:62%; left:30%; width:4px; height:4px; animation:glowPulse 3.2s ease-in-out 1.0s infinite; }
-  .cta .spark.s3{ top:26%; right:22%; width:5px; height:5px; animation:glowPulse 3.2s ease-in-out 1.8s infinite; }
-  .cta .spark.s4{ bottom:30%; right:14%; width:4px; height:4px; animation:glowPulse 3.2s ease-in-out 2.4s infinite; }
-  @keyframes glowPulse{
-    0%,100%{ opacity:0; transform:scale(.6); }
-    50%{ opacity:.8; transform:scale(1.4); }
-  }
+  .cta::after{content:"  →";}
   @keyframes ctaShine{
-    0%{ left:-60%; }
-    60%{ left:120%; }
-    100%{ left:120%; }
+    0%{background-position:0 0, 0 0, 0 0, 0 0, 0 0, 0 0, -120% 0, 0 0;}
+    60%,100%{background-position:0 0, 0 0, 0 0, 0 0, 0 0, 0 0, 120% 0, 0 0;}
   }
-  @keyframes ctaWobble{
-    0%,100%{ transform:translateY(0) scale(1); }
-    50%{ transform:translateY(-2px) scale(1.015); }
-  }
-  @keyframes ctaArrow{
-    0%,100%{ transform:translateX(0); }
-    50%{ transform:translateX(4px); }
+  @keyframes ctaSparkle{
+    0%,100%{filter:brightness(1);}
+    50%{filter:brightness(1.18);}
   }
 
   /* Points section */
@@ -391,7 +373,7 @@
 <div class="wrapper">
 
   <header class="hero hero-cover">
-    <img class="hero-cover-img" src="images/7habits_fv.jpg" alt="私が5キロ痩せたときにやっていた7つの習慣">
+    <img class="hero-cover-img" src="images/hero.jpg" alt="私が5キロ痩せたときにやっていた7つの習慣">
   </header>
 
   <section class="intro">
@@ -471,7 +453,7 @@
     </div>
 
     <!-- リンク先URL: [ユーザーが後で設定] -->
-    <a href="https://s.lmes.jp/l/McMTdxGjPz" target="_blank" rel="noopener" class="cta c-pink"><span class="spark s1"></span><span class="spark s2"></span><span class="spark s3"></span><span class="spark s4"></span>一番人気の痩せレシピ3選を<br>受け取る</a>
+    <a href="#" class="cta">一番人気の痩せレシピ3選を<br>受け取る</a>
   </article>
 
   <!-- Habit 3 -->
@@ -514,7 +496,7 @@
     </div>
 
     <!-- リンク先URL: [ユーザーが後で設定] -->
-    <a href="https://youtu.be/Vy8gTqTAhCQ" target="_blank" rel="noopener" class="cta c-orange"><span class="spark s1"></span><span class="spark s2"></span><span class="spark s3"></span><span class="spark s4"></span>おすすめの<br>朝トレ動画を見る</a>
+    <a href="#" class="cta">おすすめの<br>朝トレ動画を見る</a>
   </article>
 
   <!-- Habit 4 -->
@@ -556,7 +538,7 @@
     </div>
 
     <!-- リンク先URL: [ユーザーが後で設定] -->
-    <a href="https://www.fastinglife.co.jp/order_lp/123340" target="_blank" rel="noopener" class="cta c-mint"><span class="spark s1"></span><span class="spark s2"></span><span class="spark s3"></span><span class="spark s4"></span>おすすめの<br>置き換えセットはこちら</a>
+    <a href="#" class="cta">おすすめの<br>置き換えセットはこちら</a>
   </article>
 
   <!-- Habit 5 -->
@@ -588,7 +570,7 @@
       <li>頭皮マッサージ<br>（血行促進・リフトアップ）</li>
     </ul>
 
-    <img class="habit-img" src="images/habits/scalp.png" alt="">
+    <img class="habit-img" src="images/habits/24.jpg" alt="">
 
     <div class="tip">
       <span class="tip-title">続けるコツ</span>
@@ -695,7 +677,7 @@
     </div>
 
     <!-- リンク先URL: [ユーザーが後で設定] -->
-    <a href="https://liff.line.me/2006979316-KnVN3g2V?calendar_salon_id=9208&ts=1778304556" target="_blank" rel="noopener" class="cta c-violet"><span class="spark s1"></span><span class="spark s2"></span><span class="spark s3"></span><span class="spark s4"></span>個別相談に申し込む</a>
+    <a href="#" class="cta">相談会に参加して<br>痩せるきっかけを掴む</a>
   </article>
 
   <!-- Points -->
@@ -743,7 +725,7 @@
       一緒に見つけましょう。
     </p>
     <!-- リンク先URL: [ユーザーが後で設定] -->
-    <a href="https://liff.line.me/2006979316-KnVN3g2V?calendar_salon_id=9208&ts=1778304556" target="_blank" rel="noopener" class="cta c-gold"><span class="spark s1"></span><span class="spark s2"></span><span class="spark s3"></span><span class="spark s4"></span>個別相談に申し込む</a>
+    <a href="#" class="cta">相談会に参加して<br>痩せるきっかけを掴む</a>
   </section>
 
   <footer>5キロ痩せた7つの習慣 — Special Gift</footer>

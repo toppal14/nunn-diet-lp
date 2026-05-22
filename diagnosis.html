@@ -1,0 +1,2270 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>理想のあなたを目指すダイエットタイプ診断</title>
+<style>
+  :root {
+    --bg:           #F8F2EA;
+    --paper:        #FFFFFF;
+    --paper-tint:   #FBF6EE;
+    --rose-deep:    #B86E70;
+    --rose:         #D08D8B;
+    --rose-light:   #E8B5B1;
+    --blush:        #F2DCD8;
+    --mauve:        #A77A82;
+    --sage:         #A8BC9B;
+    --sage-deep:    #88A07A;
+    --gold:         #C2A267;
+    --text:         #3F2E26;
+    --text-soft:    #6B5448;
+    --muted:        #998578;
+    --line:         #E8DCCB;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body {
+    font-family: -apple-system, "Hiragino Mincho ProN", "Yu Mincho", "游明朝", "Hiragino Sans", "Yu Gothic", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.85;
+    font-size: 15px;
+    -webkit-font-smoothing: antialiased;
+  }
+  body { padding: 20px 14px 70px; }
+  .container { max-width: 680px; margin: 0 auto; }
+
+  /* ====== 上部ラベル（リボン風） ====== */
+  .ribbon {
+    display: inline-block;
+    background: var(--rose-deep);
+    color: #fff;
+    padding: 5px 18px 5px 12px;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    font-weight: 600;
+    margin-bottom: 18px;
+    clip-path: polygon(0 0, 100% 0, calc(100% - 10px) 50%, 100% 100%, 0 100%);
+  }
+
+  /* ====== プログレスバー ====== */
+  .progress {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 22px;
+  }
+  .progress div {
+    flex: 1;
+    height: 3px;
+    background: var(--blush);
+  }
+  .progress div.active { background: var(--rose-deep); }
+
+  /* ====== カード ====== */
+  .card {
+    background: var(--paper);
+    padding: 32px 24px;
+    margin-bottom: 16px;
+    border: 1px solid var(--line);
+    position: relative;
+  }
+  .card-tint { background: var(--paper-tint); }
+
+  /* タイトル装飾 */
+  h1 {
+    font-family: "Hiragino Mincho ProN", "Yu Mincho", serif;
+    font-size: 26px;
+    color: var(--text);
+    text-align: center;
+    letter-spacing: 0.04em;
+    line-height: 1.5;
+    margin-bottom: 10px;
+    font-weight: 600;
+  }
+  h1 .em {
+    color: var(--rose-deep);
+    border-bottom: 2px solid var(--rose-light);
+    padding-bottom: 2px;
+  }
+  h2 {
+    font-family: "Hiragino Mincho ProN", "Yu Mincho", serif;
+    color: var(--text);
+    font-size: 22px;
+    margin-bottom: 8px;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+  }
+  h2 .em { color: var(--rose-deep); }
+
+  .accent-dots {
+    text-align: center;
+    margin: 6px 0 22px;
+    letter-spacing: 8px;
+    font-size: 8px;
+    color: var(--rose-light);
+  }
+  .accent-dots::before { content: "● ● ●"; }
+
+  .lead {
+    color: var(--text-soft);
+    text-align: center;
+    font-size: 13px;
+    margin-bottom: 22px;
+    line-height: 1.9;
+  }
+
+  /* ====== START 画面（新デザイン） ====== */
+  .new-start {
+    position: relative;
+    background: linear-gradient(135deg, #FDF6EE 0%, #FBEEE3 100%);
+    padding: 0;
+    margin-bottom: 0;
+    overflow: hidden;
+    border: 1px solid var(--line);
+  }
+  .hero-img-wrap {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 48%;
+    height: 54%;
+    overflow: hidden;
+    border-bottom-left-radius: 100% 80%;
+    background: #F8E9DD;
+    z-index: 1;
+  }
+  .hero-img-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 30%;
+  }
+  .botanical {
+    position: absolute;
+    z-index: 2;
+    opacity: 0.5;
+    color: #C9817F;
+    pointer-events: none;
+  }
+  .botanical.tr { top: 18px; right: 24px; width: 110px; height: 80px; }
+  .botanical.br { bottom: 12px; right: 14px; width: 110px; height: 110px; }
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    padding: 44px 26px 32px;
+  }
+  .hero-script {
+    font-family: "Snell Roundhand","Apple Chancery","Brush Script MT","Lucida Handwriting",cursive;
+    color: #D8A6A4;
+    font-size: 26px;
+    font-style: italic;
+    margin-bottom: 16px;
+    letter-spacing: 0.02em;
+    line-height: 1.1;
+  }
+  .hero-sub-text {
+    color: #5C4738;
+    font-size: 15px;
+    line-height: 1.8;
+    margin-bottom: 36px;
+    font-weight: 500;
+  }
+  .hero-main-title {
+    font-family: "Hiragino Mincho ProN","Yu Mincho",serif;
+    font-weight: 700;
+    font-size: 38px;
+    color: #3F2E26;
+    line-height: 1.5;
+    letter-spacing: 0.02em;
+    margin-bottom: 28px;
+  }
+  .hero-main-title .row1 { display: block; margin-bottom: 8px; }
+  .hero-main-title .row2 { display: block; white-space: nowrap; }
+  .hero-main-title .highlight {
+    background: #EFD5D0;
+    color: #A85D62;
+    padding: 4px 18px 6px;
+    display: inline-block;
+    font-weight: 700;
+  }
+  .hero-lead-new {
+    color: #5C4738;
+    font-size: 15px;
+    line-height: 2;
+    margin-bottom: 38px;
+    font-weight: 500;
+  }
+  .hero-features {
+    display: flex;
+    gap: 0;
+    margin-bottom: 20px;
+  }
+  .hero-features .feat {
+    flex: 1;
+    text-align: center;
+    padding: 6px 4px;
+    border-right: 1px solid rgba(184,110,112,0.2);
+  }
+  .hero-features .feat:last-child { border-right: 0; }
+  .hero-features .feat-icon {
+    width: 38px;
+    height: 38px;
+    margin: 0 auto 8px;
+    color: #C9817F;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .hero-features .feat-icon svg { width: 100%; height: 100%; stroke: currentColor; fill: none; stroke-width: 1.5; }
+  .hero-features .feat-label {
+    font-size: 12px;
+    color: #5C4738;
+    line-height: 1.55;
+    font-weight: 500;
+  }
+
+  /* CTAバナー */
+  .start-cta-banner {
+    background: linear-gradient(135deg, #B07178 0%, #9D5C66 100%);
+    padding: 32px 22px 36px;
+    text-align: center;
+    position: relative;
+  }
+  .cta-label-line {
+    color: #FFF;
+    font-size: 16px;
+    margin-bottom: 22px;
+    letter-spacing: 0.1em;
+    font-weight: 600;
+    opacity: 0.97;
+  }
+  .cta-button-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+  .start-pill-btn {
+    flex: 1;
+    background: linear-gradient(180deg, #FFFFFF 0%, #FCEEDF 100%);
+    color: #4A3329;
+    border: none;
+    padding: 22px 60px 22px 32px;
+    border-radius: 999px;
+    font-size: 20px;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: inherit;
+    box-shadow:
+      0 2px 0 #FFFFFF inset,
+      0 -4px 0 rgba(160, 100, 105, 0.18) inset,
+      0 10px 26px rgba(0,0,0,0.22),
+      0 4px 8px rgba(0,0,0,0.14),
+      0 0 20px rgba(255, 240, 220, 0.55);
+    position: relative;
+    letter-spacing: 0.06em;
+    transition: transform 0.15s, box-shadow 0.2s;
+    overflow: hidden;
+    animation: btnGlow 2.6s ease-in-out infinite;
+  }
+  .start-pill-btn:hover {
+    transform: translateY(-2px);
+    box-shadow:
+      0 2px 0 #FFFFFF inset,
+      0 -4px 0 rgba(160, 100, 105, 0.20) inset,
+      0 14px 32px rgba(0,0,0,0.26),
+      0 6px 12px rgba(0,0,0,0.16),
+      0 0 32px rgba(255, 240, 220, 0.85);
+  }
+  .start-pill-btn:active {
+    transform: translateY(1px);
+  }
+  @keyframes btnGlow {
+    0%, 100% {
+      box-shadow:
+        0 2px 0 #FFFFFF inset,
+        0 -4px 0 rgba(160, 100, 105, 0.18) inset,
+        0 10px 26px rgba(0,0,0,0.22),
+        0 4px 8px rgba(0,0,0,0.14),
+        0 0 20px rgba(255, 240, 220, 0.5);
+    }
+    50% {
+      box-shadow:
+        0 2px 0 #FFFFFF inset,
+        0 -4px 0 rgba(160, 100, 105, 0.20) inset,
+        0 12px 30px rgba(0,0,0,0.24),
+        0 4px 10px rgba(0,0,0,0.15),
+        0 0 36px rgba(255, 240, 220, 0.9);
+    }
+  }
+  /* シマー（光が走るアニメ） */
+  .start-pill-btn::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -120%;
+    width: 60%;
+    height: 100%;
+    background: linear-gradient(120deg,
+      transparent 20%,
+      rgba(255, 255, 255, 0.7) 50%,
+      transparent 80%);
+    transform: skewX(-22deg);
+    animation: btnShimmer 3.6s infinite;
+  }
+  @keyframes btnShimmer {
+    0% { left: -120%; }
+    55% { left: 130%; }
+    100% { left: 130%; }
+  }
+  .start-pill-btn .arrow {
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 1.5px solid #4A3329;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    line-height: 1;
+    font-weight: 600;
+    background: rgba(255,255,255,0.7);
+  }
+  .cta-circle-badge {
+    flex-shrink: 0;
+    width: 76px;
+    height: 76px;
+    border: 1.5px dashed rgba(255,255,255,0.85);
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: #FFF;
+    font-size: 10px;
+    line-height: 1.4;
+    text-align: center;
+  }
+  .cta-circle-badge .num {
+    font-size: 17px;
+    font-weight: 700;
+    margin-top: 2px;
+  }
+  .cta-cursive-end {
+    font-family: "Snell Roundhand","Apple Chancery","Brush Script MT","Lucida Handwriting",cursive;
+    color: rgba(255,255,255,0.85);
+    font-size: 21px;
+    margin-top: 4px;
+    font-style: italic;
+    letter-spacing: 0.04em;
+  }
+
+  @media (max-width: 380px) {
+    .hero-main-title { font-size: 26px; }
+    .hero-img-wrap { width: 52%; }
+    .hero-content { padding: 30px 18px 24px; }
+  }
+  .start-hero .tag {
+    display: inline-block;
+    color: var(--rose-deep);
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    margin-bottom: 14px;
+    font-weight: 600;
+  }
+  .start-hero h1 {
+    color: var(--text);
+    font-size: 26px;
+    line-height: 1.6;
+    margin-bottom: 14px;
+  }
+  .start-hero p {
+    font-size: 13px;
+    color: var(--text-soft);
+    letter-spacing: 0.05em;
+  }
+  .sparkle { color: var(--gold); }
+
+  .steps-mini {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 6px;
+    margin-bottom: 22px;
+  }
+  .step-mini {
+    background: var(--paper);
+    padding: 16px 6px;
+    text-align: center;
+    border: 1px solid var(--line);
+  }
+  .step-mini .num {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    background: var(--rose);
+    color: #fff;
+    line-height: 30px;
+    font-weight: 600;
+    font-size: 13px;
+    margin-bottom: 8px;
+    border-radius: 50%;
+  }
+  .step-mini .lbl {
+    font-size: 11px;
+    color: var(--text);
+    font-weight: 600;
+    line-height: 1.5;
+    letter-spacing: 0.02em;
+  }
+
+  /* ====== フォーム ====== */
+  .field { margin-bottom: 22px; }
+  .field-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+  .field-num {
+    background: var(--rose-deep);
+    color: #fff;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 26px;
+    font-weight: 600;
+    font-size: 12px;
+    flex-shrink: 0;
+  }
+  .field-label .title {
+    font-weight: 600;
+    color: var(--text);
+    font-size: 15px;
+  }
+  .field-help {
+    font-size: 12px;
+    color: var(--muted);
+    margin-left: 36px;
+    margin-top: -6px;
+    margin-bottom: 8px;
+  }
+
+  input[type="number"], select {
+    width: 100%;
+    padding: 13px 14px;
+    border: 1px solid var(--line);
+    background: var(--paper-tint);
+    color: var(--text);
+    font-size: 16px;
+    font-family: inherit;
+    border-radius: 0;
+  }
+  input:focus, select:focus { outline: none; border-color: var(--rose-deep); background: #fff; }
+  .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .row3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
+  .unit { font-size: 13px; color: var(--muted); margin-left: 6px; }
+
+  /* チェック「今の体重に満足」 */
+  .check-wrap {
+    margin-top: 10px;
+    padding: 12px 14px;
+    background: var(--paper-tint);
+    border: 1px solid var(--line);
+    cursor: pointer;
+    user-select: none;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 13px;
+  }
+  .check-wrap.on { background: var(--blush); border-color: var(--rose); }
+  .check-wrap .box {
+    width: 18px; height: 18px;
+    border: 1.5px solid var(--rose-deep);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    color: var(--rose-deep);
+    font-weight: 700;
+  }
+  .check-wrap.on .box { background: var(--rose-deep); color: #fff; }
+
+  /* オプション (ラジオ風) */
+  .options { display: grid; gap: 8px; }
+  .opt {
+    display: block;
+    padding: 14px 16px;
+    background: var(--paper-tint);
+    border: 1px solid var(--line);
+    cursor: pointer;
+    font-size: 14px;
+    color: var(--text);
+    line-height: 1.5;
+    transition: all 0.12s;
+  }
+  .opt:hover { border-color: var(--rose); background: #fff; }
+  .opt input { display: none; }
+  .opt.selected {
+    background: var(--rose-deep);
+    color: #fff;
+    border-color: var(--rose-deep);
+    font-weight: 600;
+  }
+
+  /* 質問ブロック */
+  .q {
+    background: var(--paper-tint);
+    padding: 18px 16px;
+    margin-bottom: 12px;
+    border: 1px solid var(--line);
+  }
+  .q .qhead { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+  .q .qnum {
+    background: var(--rose-deep);
+    color: #fff;
+    width: 30px; height: 30px;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 30px;
+    font-weight: 700;
+    font-size: 12px;
+    flex-shrink: 0;
+  }
+  .q .qtitle { font-weight: 600; color: var(--text); font-size: 15px; }
+
+  /* ====== ボタン ====== */
+  .btn {
+    display: block;
+    width: 100%;
+    padding: 16px;
+    background: var(--rose-deep);
+    color: #fff;
+    border: none;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: inherit;
+    letter-spacing: 0.05em;
+    transition: all 0.15s;
+  }
+  .btn:hover { background: #A55E60; }
+  .btn.secondary {
+    background: #fff;
+    color: var(--rose-deep);
+    border: 1px solid var(--rose-deep);
+  }
+  .btn-row { display: flex; gap: 10px; margin-top: 10px; }
+  .btn-row .btn { flex: 1; }
+
+  .error {
+    background: #fceae6;
+    color: #a14040;
+    padding: 12px 14px;
+    font-size: 13px;
+    margin-bottom: 14px;
+    display: none;
+    border-left: 3px solid #a14040;
+  }
+
+  /* ====== 結果ページ ====== */
+  .result-hero {
+    background: linear-gradient(135deg, #B86E70 0%, #9F595B 100%);
+    color: #fff;
+    padding: 36px 24px 30px;
+    text-align: center;
+    margin-bottom: 16px;
+    position: relative;
+    border: 1px solid #8C4F51;
+  }
+  .result-hero::before, .result-hero::after {
+    content: "✦";
+    position: absolute;
+    color: rgba(255,255,255,0.5);
+    font-size: 18px;
+  }
+  .result-hero::before { top: 16px; left: 18px; }
+  .result-hero::after { bottom: 16px; right: 18px; }
+  .result-hero .small {
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    opacity: 0.9;
+    margin-bottom: 12px;
+  }
+  .result-hero .code {
+    font-family: "Hiragino Mincho ProN", serif;
+    font-size: 36px;
+    font-weight: 600;
+    margin-bottom: 4px;
+    letter-spacing: 0.05em;
+  }
+  .result-hero .typename {
+    font-family: "Hiragino Mincho ProN", serif;
+    font-size: 24px;
+    font-weight: 600;
+    line-height: 1.5;
+    margin-bottom: 18px;
+    letter-spacing: 0.04em;
+  }
+  .badges {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 5px;
+  }
+  .badge {
+    background: rgba(255,255,255,0.18);
+    border: 1px solid rgba(255,255,255,0.35);
+    padding: 4px 11px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+  }
+
+  /* 個別データ */
+  .result-info {
+    background: var(--paper);
+    padding: 16px 18px;
+    margin-bottom: 14px;
+    font-size: 13px;
+    color: var(--text-soft);
+    border: 1px solid var(--line);
+  }
+  .result-info .row {
+    display: flex;
+    justify-content: space-between;
+    padding: 4px 0;
+    border-bottom: 1px dashed var(--line);
+  }
+  .result-info .row:last-child { border-bottom: 0; }
+  .result-info b { color: var(--rose-deep); font-weight: 600; }
+
+  /* 目標カード */
+  .goal-card {
+    background: linear-gradient(135deg, #FBF6EE 0%, #F2E7D5 100%);
+    border: 1px solid var(--line);
+    padding: 18px 20px;
+    margin-bottom: 14px;
+    text-align: center;
+  }
+  .goal-card .ttl {
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    color: var(--rose-deep);
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+  .goal-card .body {
+    font-family: "Hiragino Mincho ProN", serif;
+    font-size: 17px;
+    color: var(--text);
+    font-weight: 600;
+    line-height: 1.7;
+  }
+
+  /* セクション */
+  .section {
+    background: var(--paper);
+    padding: 22px 22px;
+    margin-bottom: 12px;
+    border: 1px solid var(--line);
+  }
+  .section h3 {
+    font-family: "Hiragino Mincho ProN", serif;
+    color: var(--rose-deep);
+    font-size: 15px;
+    margin-bottom: 14px;
+    letter-spacing: 0.06em;
+    font-weight: 600;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--blush);
+  }
+  .section ul { list-style: none; }
+  .section ul li {
+    font-size: 14px;
+    padding: 6px 0;
+    padding-left: 22px;
+    position: relative;
+    color: var(--text);
+  }
+  .section ul li::before {
+    content: "❀";
+    position: absolute;
+    left: 0;
+    color: var(--rose);
+    font-size: 12px;
+    top: 7px;
+  }
+
+  .section.method {
+    background: #F2EEE0;
+    border-color: #D8CCB0;
+  }
+  .section.method h3 { color: var(--sage-deep); border-color: var(--sage); }
+  .section.method ul li::before { content: "✓"; color: var(--sage-deep); font-weight: 700; }
+
+  .section.concern {
+    background: var(--paper);
+  }
+  .section.concern .focus {
+    background: var(--paper-tint);
+    border-left: 3px solid var(--rose);
+    padding: 12px 14px;
+    margin-top: 4px;
+    font-size: 14px;
+    line-height: 1.8;
+    color: var(--text);
+  }
+
+  .section.question {
+    background: linear-gradient(135deg, var(--rose) 0%, var(--rose-deep) 100%);
+    border-color: var(--rose-deep);
+    color: #fff;
+  }
+  .section.question h3 {
+    color: #fff;
+    border-color: rgba(255,255,255,0.4);
+  }
+  .section.question p {
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 1.8;
+  }
+
+  .section.proposal {
+    background: linear-gradient(135deg, #4A3329 0%, #5A4234 100%);
+    border-color: #3A2620;
+    color: #fff;
+  }
+  .section.proposal h3 {
+    color: #E5C291;
+    border-color: rgba(229,194,145,0.3);
+  }
+  .section.proposal p {
+    font-size: 15px;
+    line-height: 1.95;
+    font-weight: 500;
+    margin-bottom: 14px;
+  }
+  .section.proposal p:last-child { margin-bottom: 0; }
+  .section.proposal p,
+  .section.proposal .vision,
+  .section.proposal .vision li,
+  .section.proposal span,
+  .section.proposal .note { color: #FFF; }
+  .section.proposal strong {
+    color: #F5C97F;
+    font-weight: 700;
+  }
+  .section.proposal .big {
+    font-size: 22px;
+    color: #FCD89C;
+    letter-spacing: 0.02em;
+  }
+  .section.proposal .ul {
+    border-bottom: 1px solid #C9A267;
+    padding-bottom: 1px;
+  }
+  .section.proposal .vision {
+    background: rgba(229,194,145,0.10);
+    border-left: 3px solid #E5C291;
+    padding: 14px 16px;
+    margin: 14px 0;
+    font-size: 14px;
+    line-height: 2;
+  }
+  .section.proposal .vision .vt {
+    display: block;
+    font-size: 12px;
+    letter-spacing: 0.2em;
+    color: #E5C291;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+  .section.proposal .vision ul {
+    list-style: none;
+    margin-top: 4px;
+  }
+  .section.proposal .vision ul li {
+    padding: 4px 0 4px 18px;
+    position: relative;
+    font-size: 14px;
+  }
+  .section.proposal .vision ul li::before {
+    content: "✦";
+    position: absolute;
+    left: 0;
+    color: #E5C291;
+    font-size: 11px;
+    top: 6px;
+  }
+
+  /* ===== お声セクション ===== */
+  .section.proposal .voices {
+    margin: 16px 0;
+  }
+  .section.proposal .voices .vt {
+    display: block;
+    font-size: 12px;
+    letter-spacing: 0.2em;
+    color: #E5C291;
+    font-weight: 700;
+    margin-bottom: 12px;
+  }
+  .voice-card {
+    background: rgba(229,194,145,0.12);
+    border-left: 3px solid #E5C291;
+    padding: 14px 14px;
+    margin-bottom: 10px;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    position: relative;
+  }
+  .voice-card:last-child { margin-bottom: 0; }
+  .voice-avatar {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    object-fit: cover;
+    flex-shrink: 0;
+    border: 2px solid rgba(255,255,255,0.85);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.18);
+  }
+  .voice-body { flex: 1; min-width: 0; }
+  .voice-quote {
+    color: #FFF !important;
+    font-size: 13.5px !important;
+    line-height: 1.85 !important;
+    font-style: italic;
+    margin-bottom: 8px !important;
+    font-weight: 400 !important;
+    position: relative;
+  }
+  .voice-quote::before {
+    content: "❝";
+    color: #E5C291;
+    font-size: 22px;
+    font-weight: 700;
+    margin-right: 4px;
+    line-height: 1;
+    vertical-align: -2px;
+  }
+  .voice-name {
+    font-size: 11px;
+    color: #F5C97F;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    margin-top: 4px;
+  }
+  .voice-name .who { color: #FCD89C; }
+  .voice-name .sub {
+    color: rgba(255,255,255,0.65);
+    font-weight: 400;
+    margin-left: 6px;
+    font-size: 10.5px;
+  }
+  .section.proposal .note {
+    font-size: 12px;
+    opacity: 0.78;
+    line-height: 1.8;
+    display: block;
+    padding-top: 8px;
+    border-top: 1px dashed rgba(229,194,145,0.3);
+  }
+
+  /* ====== 個別相談CTA ====== */
+  .cta-card {
+    background: linear-gradient(180deg, #FBF6EE 0%, #F5E8D6 100%);
+    border: 1px solid #D8CCB0;
+    padding: 28px 22px;
+    text-align: center;
+    margin-top: 20px;
+  }
+  .cta-card h2 {
+    color: var(--text);
+    font-size: 22px;
+    margin-bottom: 8px;
+  }
+  .cta-card .free {
+    display: inline-block;
+    background: #fff;
+    color: var(--rose-deep);
+    padding: 4px 14px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    margin-bottom: 16px;
+    border: 1px solid var(--rose);
+  }
+  .cta-list {
+    background: #fff;
+    padding: 16px 18px;
+    margin-bottom: 20px;
+    text-align: left;
+    border: 1px solid var(--line);
+  }
+  .cta-list div {
+    font-size: 13px;
+    color: var(--text);
+    padding: 5px 0;
+    padding-left: 22px;
+    position: relative;
+  }
+  .cta-list div::before {
+    content: "♥";
+    position: absolute;
+    left: 0;
+    color: var(--rose);
+    font-size: 12px;
+    top: 6px;
+  }
+
+  /* ===== LINEキラキラ立体ボタン (楕円型) ===== */
+  .line-btn {
+    display: block;
+    position: relative;
+    padding: 22px 18px;
+    background: linear-gradient(180deg, #34D667 0%, #06C755 50%, #04A547 100%);
+    color: #fff;
+    font-size: 19px;
+    font-weight: 700;
+    text-decoration: none;
+    letter-spacing: 0.06em;
+    text-align: center;
+    overflow: hidden;
+    border-radius: 999px;
+    margin: 6px auto 0;
+    max-width: 100%;
+    box-shadow:
+      0 2px 0 rgba(255,255,255,0.55) inset,
+      0 -4px 0 rgba(0,0,0,0.20) inset,
+      0 10px 24px rgba(6, 199, 85, 0.50),
+      0 4px 8px rgba(0,0,0,0.18);
+    transition: all 0.2s;
+    transform: translateY(0);
+    text-shadow: 0 1px 2px rgba(0,0,0,0.22);
+    animation: pulseGlow 2.4s ease-in-out infinite;
+  }
+  @keyframes pulseGlow {
+    0%, 100% { box-shadow:
+      0 2px 0 rgba(255,255,255,0.55) inset,
+      0 -4px 0 rgba(0,0,0,0.20) inset,
+      0 10px 24px rgba(6, 199, 85, 0.50),
+      0 4px 8px rgba(0,0,0,0.18); }
+    50% { box-shadow:
+      0 2px 0 rgba(255,255,255,0.55) inset,
+      0 -4px 0 rgba(0,0,0,0.20) inset,
+      0 10px 32px rgba(6, 199, 85, 0.72),
+      0 4px 12px rgba(6, 199, 85, 0.4); }
+  }
+  .line-btn:hover {
+    transform: translateY(-2px);
+    box-shadow:
+      0 1px 0 rgba(255,255,255,0.6) inset,
+      0 -3px 0 rgba(0,0,0,0.2) inset,
+      0 10px 22px rgba(6, 199, 85, 0.55),
+      0 3px 6px rgba(0,0,0,0.18);
+  }
+  .line-btn:active {
+    transform: translateY(1px);
+    box-shadow:
+      0 1px 0 rgba(255,255,255,0.4) inset,
+      0 -1px 0 rgba(0,0,0,0.15) inset,
+      0 3px 8px rgba(6, 199, 85, 0.4);
+  }
+  /* キラキラ shimmer */
+  .line-btn::before {
+    content: "";
+    position: absolute;
+    top: 0; left: -120%;
+    width: 60%; height: 100%;
+    background: linear-gradient(120deg,
+      transparent 20%,
+      rgba(255,255,255,0.5) 50%,
+      transparent 80%);
+    transform: skewX(-25deg);
+    animation: shimmer 3.5s infinite;
+  }
+  @keyframes shimmer {
+    0% { left: -120%; }
+    55% { left: 120%; }
+    100% { left: 120%; }
+  }
+  .line-btn .sp {
+    display: inline-block;
+    margin: 0 6px;
+    animation: twinkle 1.6s infinite alternate;
+  }
+  .line-btn .sp:nth-child(3) { animation-delay: 0.4s; }
+  @keyframes twinkle {
+    from { opacity: 0.6; transform: scale(0.85); }
+    to   { opacity: 1; transform: scale(1.15); }
+  }
+
+  /* ===== 7日間プラン待ち受け ===== */
+  .wallpaper-section {
+    background: linear-gradient(180deg, #FBF6EE 0%, #F2E3CC 100%);
+    border: 1px solid #D8CCB0;
+    padding: 28px 22px;
+    margin-bottom: 14px;
+    text-align: center;
+    position: relative;
+  }
+  .wallpaper-section::before, .wallpaper-section::after {
+    content: "❀";
+    position: absolute;
+    color: var(--rose);
+    opacity: 0.4;
+    font-size: 22px;
+  }
+  .wallpaper-section::before { top: 14px; left: 18px; }
+  .wallpaper-section::after { bottom: 14px; right: 18px; }
+  .wallpaper-section .ws-lbl {
+    font-size: 11px;
+    letter-spacing: 0.28em;
+    color: var(--rose-deep);
+    font-weight: 700;
+    margin-bottom: 10px;
+  }
+  .wallpaper-section h2 {
+    font-size: 22px;
+    margin-bottom: 8px;
+  }
+  .wallpaper-section .ws-desc {
+    font-size: 13px;
+    color: var(--text-soft);
+    line-height: 1.85;
+    margin-bottom: 16px;
+  }
+  .ws-thumb {
+    display: inline-block;
+    padding: 6px;
+    background: #fff;
+    border: 1px solid var(--line);
+    margin: 6px 0 18px;
+    box-shadow: 0 6px 18px rgba(184, 110, 112, 0.15);
+    max-width: 200px;
+  }
+  .ws-thumb canvas { width: 100%; height: auto; display: block; }
+  .btn.ws-btn {
+    background: var(--gold);
+    color: #fff;
+    box-shadow: 0 4px 10px rgba(194, 162, 103, 0.35);
+  }
+  .btn.ws-btn:hover { background: #B08F58; }
+  .ws-hint {
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 10px;
+    line-height: 1.7;
+  }
+
+  /* ===== 画像保存モーダル ===== */
+  .img-modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(40, 30, 25, 0.92);
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+    overflow-y: auto;
+  }
+  .img-modal-inner {
+    background: #fff;
+    max-width: 480px;
+    width: 100%;
+    padding: 18px;
+    text-align: center;
+    max-height: 92vh;
+    overflow-y: auto;
+  }
+  .img-modal h3 {
+    color: var(--rose-deep);
+    font-size: 16px;
+    margin-bottom: 10px;
+    font-weight: 700;
+  }
+  .img-modal .modal-hint {
+    background: #FFF8E8;
+    border-left: 3px solid var(--gold);
+    padding: 12px 14px;
+    margin-bottom: 14px;
+    font-size: 13px;
+    text-align: left;
+    line-height: 1.85;
+    color: var(--text);
+  }
+  .img-modal .modal-hint strong { color: var(--rose-deep); }
+  .img-modal img {
+    width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto 14px;
+    border: 1px solid var(--line);
+  }
+  .img-modal-actions { display: flex; gap: 8px; }
+  .img-modal-actions .btn { flex: 1; padding: 12px; font-size: 13px; }
+  .img-modal-close {
+    background: var(--text);
+    color: #fff;
+    border: none;
+    padding: 12px;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 600;
+    flex: 1;
+  }
+  .img-modal-save {
+    background: var(--rose-deep);
+    color: #fff;
+    border: none;
+    padding: 12px;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+  }
+
+  /* ===== 診断コードカード ===== */
+  .code-card {
+    background: #FFFFFF;
+    border: 2px dashed var(--rose);
+    padding: 22px 18px;
+    margin-bottom: 16px;
+    text-align: center;
+    position: relative;
+  }
+  .code-card .lbl {
+    font-size: 11px;
+    letter-spacing: 0.28em;
+    color: var(--rose-deep);
+    font-weight: 700;
+    margin-bottom: 12px;
+  }
+  .code-card .code-display {
+    display: inline-block;
+    background: linear-gradient(180deg, #FFFFFF 0%, #FBF1EE 100%);
+    border: 1.5px solid var(--rose);
+    padding: 14px 22px;
+    font-family: "SF Mono", "Menlo", "Consolas", "Courier New", monospace;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--rose-deep);
+    letter-spacing: 0.18em;
+    margin-bottom: 14px;
+    user-select: all;
+    box-shadow: 0 2px 6px rgba(184, 110, 112, 0.12);
+  }
+  .copy-btn {
+    background: var(--text);
+    color: #fff;
+    border: none;
+    padding: 11px 28px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: inherit;
+    letter-spacing: 0.1em;
+    transition: all 0.2s;
+  }
+  .copy-btn:hover { background: var(--rose-deep); }
+  .copy-btn.copied { background: var(--sage-deep); }
+
+  .code-instr {
+    background: #FFF8E8;
+    border-left: 3px solid var(--gold);
+    padding: 14px 16px;
+    margin-bottom: 18px;
+    font-size: 13px;
+    line-height: 2;
+    color: var(--text);
+    text-align: left;
+  }
+  .code-instr strong { color: var(--rose-deep); font-weight: 700; }
+  .code-instr .step {
+    display: inline-block;
+    width: 22px; height: 22px;
+    background: var(--rose-deep);
+    color: #fff;
+    text-align: center;
+    line-height: 22px;
+    font-weight: 700;
+    font-size: 11px;
+    margin-right: 8px;
+    border-radius: 50%;
+  }
+  .code-instr .row { display: flex; align-items: flex-start; gap: 4px; padding: 3px 0; }
+
+  .restart-link {
+    display: block;
+    text-align: center;
+    color: var(--muted);
+    font-size: 12px;
+    margin-top: 22px;
+    text-decoration: underline;
+    cursor: pointer;
+  }
+
+  @media (max-width: 480px) {
+    body { font-size: 14px; }
+    h1, .start-hero h1 { font-size: 22px; }
+    h2 { font-size: 18px; }
+    .row2 { grid-template-columns: 1fr; }
+    .step-mini .lbl { font-size: 10px; }
+    .card { padding: 26px 18px; }
+    .section { padding: 18px 16px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- ============ START ============ -->
+  <div id="screen-start" class="screen">
+    <div class="new-start">
+      <!-- 右上の女性イラスト（曲線カット） -->
+      <div class="hero-img-wrap">
+        <img src="illustrations/05_woman_back_cup_leaves.png" alt="">
+      </div>
+
+      <!-- 右上の植物ラインアート装飾 -->
+      <svg class="botanical tr" viewBox="0 0 110 80" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round">
+        <path d="M55 5 Q70 25 80 50 Q85 65 75 75"/>
+        <path d="M55 5 Q60 18 55 30"/>
+        <ellipse cx="68" cy="22" rx="6" ry="3" transform="rotate(35 68 22)"/>
+        <ellipse cx="78" cy="38" rx="7" ry="3" transform="rotate(45 78 38)"/>
+        <ellipse cx="84" cy="55" rx="6" ry="3" transform="rotate(55 84 55)"/>
+        <ellipse cx="50" cy="18" rx="5" ry="2.5" transform="rotate(-30 50 18)"/>
+        <ellipse cx="46" cy="28" rx="5" ry="2.5" transform="rotate(-40 46 28)"/>
+      </svg>
+
+      <!-- 右下の植物ラインアート装飾 -->
+      <svg class="botanical br" viewBox="0 0 110 110" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round">
+        <path d="M55 105 Q58 70 65 30 Q68 15 75 5"/>
+        <path d="M55 105 Q45 80 38 55"/>
+        <ellipse cx="62" cy="60" rx="5" ry="2.5" transform="rotate(70 62 60)"/>
+        <ellipse cx="58" cy="40" rx="5" ry="2.5" transform="rotate(70 58 40)"/>
+        <ellipse cx="66" cy="22" rx="5" ry="2.5" transform="rotate(60 66 22)"/>
+        <ellipse cx="46" cy="78" rx="5" ry="2.5" transform="rotate(120 46 78)"/>
+        <ellipse cx="42" cy="62" rx="4" ry="2" transform="rotate(120 42 62)"/>
+        <circle cx="76" cy="10" r="3"/>
+      </svg>
+
+      <!-- テキストコンテンツ -->
+      <div class="hero-content">
+        <div class="hero-script">Diet type diagnosis</div>
+        <div class="hero-sub-text">理想のあなたを目指す<br>ダイエット診断</div>
+
+        <h1 class="hero-main-title">
+          <span class="row1">あなたに合った</span>
+          <span class="row2">道のりが、<span class="highlight">わかる</span></span>
+        </h1>
+
+        <p class="hero-lead-new">11の質問で、<br>あなたにぴったりのタイプを<br>お届けします</p>
+
+        <div class="hero-features">
+          <div class="feat">
+            <div class="feat-icon">
+              <svg viewBox="0 0 32 32"><rect x="9" y="6" width="14" height="22" rx="1.5"/><path d="M12 4h8v4h-8z"/><path d="M12 14h8M12 19h8M12 24h5"/></svg>
+            </div>
+            <div class="feat-label">簡単診断<br>11の質問</div>
+          </div>
+          <div class="feat">
+            <div class="feat-icon">
+              <svg viewBox="0 0 32 32"><path d="M16 26 C8 20 4 14 6 9 C8 5 13 5 16 9 C19 5 24 5 26 9 C28 14 24 20 16 26 Z"/></svg>
+            </div>
+            <div class="feat-label">今のあなたが<br>わかる</div>
+          </div>
+          <div class="feat">
+            <div class="feat-icon">
+              <svg viewBox="0 0 32 32"><path d="M8 26 Q14 16 26 6 Q25 18 18 24 Q14 27 8 26 Z"/><path d="M8 26 Q14 22 22 14"/></svg>
+            </div>
+            <div class="feat-label">理想への<br>ヒントに</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 下部のCTAバナー -->
+    <div class="start-cta-banner">
+      <div class="cta-label-line">＼ まずは無料で診断してみる ／</div>
+      <div class="cta-button-row">
+        <button class="start-pill-btn" onclick="goto('step1')">
+          診断をはじめる
+          <span class="arrow">›</span>
+        </button>
+        <div class="cta-circle-badge">
+          <span>完全無料</span>
+          <span>所要時間</span>
+          <span class="num">約3分</span>
+        </div>
+      </div>
+      <div class="cta-cursive-end">Let's begin!</div>
+    </div>
+  </div>
+
+  <!-- ============ STEP 1 基本情報 ============ -->
+  <div id="screen-step1" class="screen" style="display:none;">
+    <div style="text-align:center;"><span class="ribbon">STEP 1 / 3 &nbsp;&nbsp;基本情報</span></div>
+    <div class="progress"><div class="active"></div><div></div><div></div></div>
+
+    <div class="card">
+      <h2>あなたについて、<span class="em">少しだけ</span></h2>
+      <div class="accent-dots"></div>
+      <div class="error" id="err1">すべての項目に入力してください</div>
+
+      <div class="row2">
+        <div class="field">
+          <div class="field-label"><span class="field-num">1</span><span class="title">身長</span></div>
+          <input type="number" id="height" placeholder="例：158" min="100" max="220" inputmode="numeric"><span class="unit">cm</span>
+        </div>
+        <div class="field">
+          <div class="field-label"><span class="field-num">2</span><span class="title">現在の体重</span></div>
+          <input type="number" id="weight" placeholder="例：58" min="30" max="200" step="0.1" inputmode="decimal"><span class="unit">kg</span>
+        </div>
+      </div>
+
+      <div class="field">
+        <div class="field-label"><span class="field-num">3</span><span class="title">生年月日</span></div>
+        <div class="row3">
+          <select id="bYear"><option value="">年</option></select>
+          <select id="bMonth"><option value="">月</option></select>
+          <select id="bDay"><option value="">日</option></select>
+        </div>
+      </div>
+
+      <div class="field">
+        <div class="field-label"><span class="field-num">4</span><span class="title">普段の運動量は？</span></div>
+        <div class="options">
+          <label class="opt" onclick="selectOpt(this,'exercise','0')"><input type="radio" name="exercise">ほぼしていない</label>
+          <label class="opt" onclick="selectOpt(this,'exercise','1')"><input type="radio" name="exercise">週1〜2回（散歩・軽い運動）</label>
+          <label class="opt" onclick="selectOpt(this,'exercise','2')"><input type="radio" name="exercise">週3〜4回（しっかり運動）</label>
+          <label class="opt" onclick="selectOpt(this,'exercise','3')"><input type="radio" name="exercise">週5回以上</label>
+        </div>
+      </div>
+
+      <button class="btn" onclick="toStep2()">次へ進む &nbsp;❀</button>
+      <div class="btn-row"><button class="btn secondary" onclick="goto('start')">← 戻る</button></div>
+    </div>
+  </div>
+
+  <!-- ============ STEP 2 目標・希望 ============ -->
+  <div id="screen-step2" class="screen" style="display:none;">
+    <div style="text-align:center;"><span class="ribbon">STEP 2 / 3 &nbsp;&nbsp;目標と希望</span></div>
+    <div class="progress"><div class="active"></div><div class="active"></div><div></div></div>
+
+    <div class="card">
+      <h2>あなたの<span class="em">希望</span>を教えてください</h2>
+      <div class="accent-dots"></div>
+      <p class="lead">無理にダイエットを勧めることはありません。<br>「今のままが好き」も大事な選択肢です。</p>
+      <div class="error" id="err2">すべての項目にお答えください</div>
+
+      <div class="field">
+        <div class="field-label"><span class="field-num">5</span><span class="title">目指す体重</span></div>
+        <div class="field-help">数字でなくても大丈夫、ざっくりでOKです。</div>
+        <input type="number" id="goalWeight" placeholder="例：54" min="30" max="200" step="0.1" inputmode="decimal"><span class="unit">kg</span>
+        <div class="check-wrap" id="satisfyWrap" onclick="toggleSatisfy()">
+          <span class="box" id="satisfyBox"></span>
+          <span>今の体重に満足している／変えたくない</span>
+        </div>
+      </div>
+
+      <div class="field">
+        <div class="field-label"><span class="field-num">6</span><span class="title">理想の方向性は？</span></div>
+        <div class="options">
+          <label class="opt" onclick="selectOpt(this,'goal','lose-big')"><input type="radio" name="goal">大幅に体重を落としたい</label>
+          <label class="opt" onclick="selectOpt(this,'goal','tone')"><input type="radio" name="goal">少し引き締めたい・スタイルを整えたい</label>
+          <label class="opt" onclick="selectOpt(this,'goal','maintain')"><input type="radio" name="goal">今をキープしたい・健康的でいたい</label>
+          <label class="opt" onclick="selectOpt(this,'goal','habit')"><input type="radio" name="goal">食事や生活習慣を整えたい</label>
+        </div>
+      </div>
+
+      <button class="btn" onclick="toStep3()">次へ進む &nbsp;❀</button>
+      <div class="btn-row"><button class="btn secondary" onclick="goto('step1')">← 戻る</button></div>
+    </div>
+  </div>
+
+  <!-- ============ STEP 3 ライフスタイル ============ -->
+  <div id="screen-step3" class="screen" style="display:none;">
+    <div style="text-align:center;"><span class="ribbon">STEP 3 / 3 &nbsp;&nbsp;あなたについて</span></div>
+    <div class="progress"><div class="active"></div><div class="active"></div><div class="active"></div></div>
+
+    <div class="card">
+      <h2>もう少しだけ、<span class="em">あなたのこと</span></h2>
+      <div class="accent-dots"></div>
+      <div class="error" id="err3">すべての質問にお答えください</div>
+
+      <div class="q">
+        <div class="qhead"><div class="qnum">Q7</div><div class="qtitle">あなたの性格は どっち寄り？</div></div>
+        <div class="options">
+          <label class="opt" onclick="selectOpt(this,'q1','A')"><input type="radio" name="q1">A. コツコツ計画派／決めたら続けたい</label>
+          <label class="opt" onclick="selectOpt(this,'q1','B')"><input type="radio" name="q1">B. ノリで動く派／気分で変わる</label>
+        </div>
+      </div>
+
+      <div class="q">
+        <div class="qhead"><div class="qnum">Q8</div><div class="qtitle">自分の時間は確保できる？</div></div>
+        <div class="options">
+          <label class="opt" onclick="selectOpt(this,'q2','A')"><input type="radio" name="q2">A. ある程度は取れる</label>
+          <label class="opt" onclick="selectOpt(this,'q2','B')"><input type="radio" name="q2">B. ほぼ余裕がない／毎日バタバタ</label>
+        </div>
+      </div>
+
+      <div class="q">
+        <div class="qhead"><div class="qnum">Q9</div><div class="qtitle">ストレスとの付き合い方は？</div></div>
+        <div class="options">
+          <label class="opt" onclick="selectOpt(this,'q3','A')"><input type="radio" name="q3">A. うまく発散できている</label>
+          <label class="opt" onclick="selectOpt(this,'q3','B')"><input type="radio" name="q3">B. つい食べてしまう／ためこむ</label>
+        </div>
+      </div>
+
+      <div class="q">
+        <div class="qhead"><div class="qnum">Q10</div><div class="qtitle">食事の傾向は？<span style="font-size:11px;color:var(--muted);font-weight:400;">（複数選択OK）</span></div></div>
+        <div class="options">
+          <label class="opt" onclick="toggleMulti(this,'foodTags','balanced')">バランスを意識している</label>
+          <label class="opt" onclick="toggleMulti(this,'foodTags','sweet')">甘いもの・お菓子が多め</label>
+          <label class="opt" onclick="toggleMulti(this,'foodTags','oily')">油っぽいもの・揚げ物が好き</label>
+          <label class="opt" onclick="toggleMulti(this,'foodTags','salty')">しょっぱいもの・濃い味が好き</label>
+        </div>
+      </div>
+
+      <div class="q">
+        <div class="qhead"><div class="qnum">Q11</div><div class="qtitle">一番気になる悩みは？</div></div>
+        <div class="options">
+          <label class="opt" onclick="selectOpt(this,'concern','belly')"><input type="radio" name="concern">お腹まわり・ぽっこりお腹</label>
+          <label class="opt" onclick="selectOpt(this,'concern','lower')"><input type="radio" name="concern">下半身・太もも</label>
+          <label class="opt" onclick="selectOpt(this,'concern','face')"><input type="radio" name="concern">顔まわり・むくみ</label>
+          <label class="opt" onclick="selectOpt(this,'concern','weight')"><input type="radio" name="concern">体重そのもの</label>
+          <label class="opt" onclick="selectOpt(this,'concern','energy')"><input type="radio" name="concern">代謝・疲れやすさ</label>
+          <label class="opt" onclick="selectOpt(this,'concern','skin')"><input type="radio" name="concern">肌・髪の調子</label>
+          <label class="opt" onclick="selectOpt(this,'concern','none')"><input type="radio" name="concern">特に大きな悩みはない</label>
+        </div>
+      </div>
+
+      <button class="btn" onclick="calculate()">結果を見る &nbsp;✦</button>
+      <div class="btn-row"><button class="btn secondary" onclick="goto('step2')">← 戻る</button></div>
+    </div>
+  </div>
+
+  <!-- ============ RESULT ============ -->
+  <div id="screen-result" class="screen" style="display:none;">
+    <div style="text-align:center;"><span class="ribbon">あなたの診断結果</span></div>
+
+    <div class="result-hero">
+      <div class="small">あなたのタイプは</div>
+      <div class="code" id="r-code">T?</div>
+      <div class="typename" id="r-name">タイプ名</div>
+      <div class="badges" id="r-badges"></div>
+    </div>
+
+    <div class="result-info" id="r-info"></div>
+
+    <div class="goal-card">
+      <div class="ttl">YOUR GOAL</div>
+      <div class="body" id="r-goal-text"></div>
+    </div>
+
+    <div class="section">
+      <h3>あなたの特徴</h3>
+      <ul id="r-features"></ul>
+    </div>
+
+    <div class="section concern">
+      <h3>気になる「<span id="r-concern-label"></span>」へのアプローチ</h3>
+      <div class="focus" id="r-concern-text"></div>
+    </div>
+
+    <div class="section method">
+      <h3>あなたに向いている方法</h3>
+      <ul id="r-methods"></ul>
+    </div>
+
+    <div class="section question">
+      <h3>ところで…</h3>
+      <p id="r-question"></p>
+    </div>
+
+    <div class="section proposal">
+      <h3>あなたへのご提案</h3>
+      <p id="r-proposal"></p>
+    </div>
+
+    <div class="wallpaper-section">
+      <h2><span class="em">7日間プラン</span>を、<br>スマホ待ち受けに</h2>
+      <p class="ws-desc">あなたの目標を叶える、毎日のヒント。<br>毎日見るスマホに、自分への応援を。</p>
+      <div class="ws-thumb"><canvas id="ws-preview" width="540" height="960"></canvas></div>
+      <button class="btn ws-btn" id="ws-download" onclick="downloadWallpaper()">⤓ 待ち受け画像をダウンロード</button>
+      <div class="ws-hint">📱 iPhone / Android：表示された画像を長押し→「写真に保存」<br>💻 PC：右クリックして「名前を付けて画像を保存」</div>
+    </div>
+
+    <div class="cta-card">
+      <h2>あなただけの<span style="color:var(--rose-deep);">個別相談</span></h2>
+      <div class="free">60分・オンライン・無料</div>
+      <div class="cta-list">
+        <div>あなたの現状とご希望をじっくりヒアリング</div>
+        <div>診断結果に合わせたオーダーメイドのご提案</div>
+        <div>同じ悩みを乗り越えた事例を具体的にお話し</div>
+        <div>不安なこと・質問に、ぜんぶお答えします</div>
+      </div>
+
+      <div class="code-card">
+        <div class="lbl">YOUR DIAGNOSIS CODE</div>
+        <div class="code-display" id="r-code-id">MD-XXXXXX</div>
+        <br>
+        <button class="copy-btn" id="copy-btn" onclick="copyCode()">⧉ コードをコピー</button>
+      </div>
+
+      <div class="code-instr">
+        <div class="row"><span class="step">1</span><span>上のコードを <strong>コピー</strong> する</span></div>
+        <div class="row"><span class="step">2</span><span>下のボタンから <strong>LINEで日程を予約</strong></span></div>
+        <div class="row"><span class="step">3</span><span>日程確定後、<strong>このコードをLINEで送信</strong> してください</span></div>
+      </div>
+
+      <a class="line-btn" href="https://liff.line.me/2006979316-KnVN3g2V?calendar_salon_id=9208&ts=1778476612" target="_blank" rel="noopener">
+        <span class="sp">✦</span>LINEで個別相談を予約する<span class="sp">✦</span>
+      </a>
+    </div>
+
+    <a class="restart-link" onclick="restart()">最初からやり直す</a>
+  </div>
+
+</div>
+
+<script>
+// ============ 16タイプデータ ============
+const TYPES = [
+  // index = 性格(計画0/ノリ1)*8 + 時間(あり0/なし1)*4 + 体型(標準0/+5超1)*2 + 運動(○0/×1)
+  { code: "T1", name: "コツコツ アクティブ タイプ", axes: ["コツコツ派","時間に余裕あり","標準体型","運動 ◯"],
+    features: ["決めたことを続けるのが得意","体を動かす時間を持てている","小さな調整で大きく変わる位置にいる"],
+    methods: ["タンパク質量を意識して整える","食事の質を一段アップする","ベースを保ちながら微調整"],
+    question: "今、体重1kgあたり何gのタンパク質を摂れていますか？" },
+  { code: "T2", name: "理論派 タイプ", axes: ["コツコツ派","時間に余裕あり","標準体型","運動 ×"],
+    features: ["頭で理解してから動きたい","運動より食生活の見直し派","数字や情報で納得したい"],
+    methods: ["軽い習慣化（1日10分から）","食事の質を学んで整える","16時間断食からスタート"],
+    question: "「太らない食べ順」って、意識したことありますか？" },
+  { code: "T3", name: "アクティブ 努力家 タイプ", axes: ["コツコツ派","時間に余裕あり","+5kg超","運動 ◯"],
+    features: ["運動を取り入れて頑張っている","結果につながりにくいと感じる","食事面に伸びしろがあるかも"],
+    methods: ["まず体の中をリセットする","栄養吸収力を取り戻す","運動効率を倍にする食事改善"],
+    question: "頑張っているのに痩せない… 原因が「腸」かもと考えたことは？" },
+  { code: "T4", name: "コツコツ 準備派 タイプ", axes: ["コツコツ派","時間に余裕あり","+5kg超","運動 ×"],
+    features: ["変わる気持ちは整っている","計画的に進めたいタイプ","あとは正しい順序を知るだけ"],
+    methods: ["体をリセットするファスティング","段階的な食事の置き換え","計画表で進捗を可視化"],
+    question: "「自分に必要な栄養素」って、把握できていますか？" },
+  { code: "T5", name: "効率派 アクティブ タイプ", axes: ["コツコツ派","時間がない","標準体型","運動 ◯"],
+    features: ["忙しい中でも動く時間を作れる","効率の良い方法を求めている","ベースは整っている"],
+    methods: ["朝のドリンク置き換え（16時間断食）","運動前後の食事最適化","1日5分の意識改革"],
+    question: "運動前のエネルギー補給、何が正解かご存知ですか？" },
+  { code: "T6", name: "コツコツ 忙しめ タイプ", axes: ["コツコツ派","時間がない","標準体型","運動 ×"],
+    features: ["仕事や予定で時間に余裕がない","運動の時間はなかなか取れない","少しずつ体型変化を感じはじめ"],
+    methods: ["スキマ時間のミニ習慣","コンビニ食の選び方","朝置き換えファスティング"],
+    question: "「1食タンパク質20g」って、どんな食事か想像つきますか？" },
+  { code: "T7", name: "アクティブ 多忙 タイプ", axes: ["コツコツ派","時間がない","+5kg超","運動 ◯"],
+    features: ["時間がない中で運動も継続","気合で乗り切ってきた","食生活に整え代があるかも"],
+    methods: ["まず内臓を休ませる短期集中","頑張りを結果につなげる食事","5日間 脂肪燃焼コース"],
+    question: "「頑張っているのに痩せない」原因、考えたことありますか？" },
+  { code: "T8", name: "忙しい毎日 タイプ", axes: ["コツコツ派","時間がない","+5kg超","運動 ×"],
+    features: ["毎日のタスクで余裕がない","運動の時間は取りにくい","まず体を整えるところから"],
+    methods: ["まずは1日のリセット食","ワンデイファスティング","頑張らないダイエット設計"],
+    question: "「疲れた時に甘いもの」が止められない理由、知っていますか？" },
+  { code: "T9", name: "楽しく動く タイプ", axes: ["マイペース派","時間に余裕あり","標準体型","運動 ◯"],
+    features: ["楽しいと続けられる","体型は標準キープできている","もう一段 上を狙える余地"],
+    methods: ["ゲーム感覚の習慣化","短期ファスティングでメリハリ","目に見える変化づくり"],
+    question: "「楽しく続ける」工夫、ダイエットでもできるって知ってますか？" },
+  { code: "T10", name: "気まま マイペース タイプ", axes: ["マイペース派","時間に余裕あり","標準体型","運動 ×"],
+    features: ["時間はあるが続かないことも","気分に波がある","標準体型は維持できている"],
+    methods: ["小さな宣言で意識づけ","気分が乗る日に集中","短期ゴール設定"],
+    question: "「3日坊主」になる本当の理由、考えたことありますか？" },
+  { code: "T11", name: "アクティブ 気まま タイプ", axes: ["マイペース派","時間に余裕あり","+5kg超","運動 ◯"],
+    features: ["体を動かすのは好き","食事面でつい気が緩む","食事と運動のバランスがカギ"],
+    methods: ["食事は仕組み化で乗り切る","短期集中で結果を体感","成功体験を次につなげる"],
+    question: "運動してるのに痩せない時、まず見直すべきは何かご存知ですか？" },
+  { code: "T12", name: "リスタート タイプ", axes: ["マイペース派","時間に余裕あり","+5kg超","運動 ×"],
+    features: ["これまで色々試してきた","続けることに難しさを感じる","正しい順序が分かれば変われる"],
+    methods: ["まず体の声を聞くリセット","リバウンドしない食事の知識","リバウンドの仕組みを理解する"],
+    question: "「リバウンドしない体質」って、作れるって知っていますか？" },
+  { code: "T13", name: "勢い マイペース タイプ", axes: ["マイペース派","時間がない","標準体型","運動 ◯"],
+    features: ["忙しいけど勢いで動ける","短期集中が得意","ベースは整っている"],
+    methods: ["短期集中型ファスティング","勢いを活かす1週間プラン","目標体重の数値化"],
+    question: "「短期集中で結果を出す」最適なやり方、知ってますか？" },
+  { code: "T14", name: "感情リセット タイプ", axes: ["マイペース派","時間がない","標準体型","運動 ×"],
+    features: ["気持ちと食欲が連動しがち","気づくと食べていることがある","ベースは保てている"],
+    methods: ["甘い欲求を消す栄養補給","ストレス源を別で発散","食べ過ぎる前のリセット"],
+    question: "「甘いものが欲しい＝栄養不足のサイン」って、知ってましたか？" },
+  { code: "T15", name: "頑張り屋 リセット タイプ", axes: ["マイペース派","時間がない","+5kg超","運動 ◯"],
+    features: ["時間ない中で運動も継続","気持ちと食欲が連動しやすい","頑張りを結果に変える余地"],
+    methods: ["まずストレスケアから","栄養を入れる→欲求を消す","5日間 脂肪燃焼で結果体感"],
+    question: "「頑張れば頑張るほど太る」その理由、考えたことありますか？" },
+  { code: "T16", name: "お疲れ リセット タイプ", axes: ["マイペース派","時間がない","+5kg超","運動 ×"],
+    features: ["心も体もペースが落ちている","全部を頑張るのは難しい","変わりたい気持ちはある"],
+    methods: ["まず体を休ませるリセット","頑張らないファスティング","小さな一歩から始める"],
+    question: "「疲れすぎて何もしたくない」自分を責めていませんか？" },
+];
+
+// ============ 悩み別アドバイス ============
+const CONCERNS = {
+  belly:  { label: "お腹まわり", text: "ぽっこりお腹は、内臓の疲れや腸内環境の乱れが大きく関係しています。表面的な腹筋運動より、まず内側を整えることが近道。短期ファスティングで腸をリセットすると、お腹のラインが驚くほど変わります。" },
+  lower:  { label: "下半身・太もも", text: "下半身太りの多くは、むくみ・血流不足・冷えが原因。食事の質を整え、巡りを良くすることで、見た目の印象が大きく変わります。ハードな運動より、毎日の食習慣の見直しが効果的です。" },
+  face:   { label: "顔まわり・むくみ", text: "顔のむくみは、塩分・水分代謝・睡眠と密接にリンク。内側を整えると、まず顔の印象から変わっていきます。1〜2週間でも変化を感じやすい部位なので、ファスティング初期の成果が出やすい場所です。" },
+  weight: { label: "体重そのもの", text: "数字の体重を動かすには、まず代謝のスイッチを入れる必要があります。食事制限だけでは、すぐリバウンドの繰り返しに…。あなたに合った正しい順序で進めれば、体重は必ず動きます。" },
+  energy: { label: "代謝・疲れやすさ", text: "「疲れやすい」は、栄養不足のサインかもしれません。食べる量ではなく、何をどう食べるかで体力は劇的に変わります。痩せながら元気になる、両立できる方法があります。" },
+  skin:   { label: "肌・髪の調子", text: "肌や髪は「内側の鏡」。腸が整うと、肌のトーン・髪のツヤがぐんと変わります。私自身、ダイエット中に一番嬉しかった変化が、実は肌のキレイさでした。" },
+  none:   { label: "今のあなたを整える", text: "大きな悩みがなくても、年齢とともに体は少しずつ変化していくもの。今の心地よさをキープしながら、未来の自分のために整えていく選択肢もあります。" },
+};
+
+// ============ 状態 ============
+const state = {
+  height: null, weight: null,
+  birthYear: null, birthMonth: null, birthDay: null,
+  exercise: null,
+  goalWeight: null, satisfied: false, goal: null,
+  q1: null, q2: null, q3: null, foodTags: [],
+  concern: null,
+  diagnosisId: null,
+};
+
+// ============ 7日間プラン生成 ============
+function generate7DayPlan(s) {
+  const tags = s.foodTags || [];
+  const day4 = tags.includes('sweet')  ? "甘いもの・お菓子を1日だけお休み"
+            : tags.includes('oily')   ? "揚げ物・脂っぽいものを1日だけお休み"
+            : tags.includes('salty')  ? "濃い味・しょっぱいものを1日だけ控える"
+            :                           "外食・コンビニ食を1日だけ控える";
+  return [
+    { title:"気づく",   food:"ひと口、よく噛んで味わう（30回が目安）", life:"朝、自分に「今日もよろしく」" },
+    { title:"足す",     food:"起きてすぐ、コップ1杯の白湯から",       life:"深呼吸を3回、好きな香りと" },
+    { title:"補う",     food:"1食、タンパク質を意識（卵・豆腐・お魚）", life:"7時間の睡眠を、自分との約束に" },
+    { title:"ゆるめる", food: day4,                                  life:"寝る30分前に、スマホをオフ" },
+    { title:"楽しむ",   food:"旬の野菜をひとつ、食卓に",             life:"自分のために5分、好きなことを" },
+    { title:"観察する", food:"量より「何を食べたか」を意識",          life:"1日の終わりに、変化を3つメモ" },
+    { title:"祝う",     food:"頑張った自分に、好きな1品を",           life:"鏡の中の自分に「ありがとう」" },
+  ];
+}
+
+// イラスト読み込み（Promise）
+function loadImage(url) {
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    img.crossOrigin = "anonymous";
+    img.onload = () => resolve(img);
+    img.onerror = reject;
+    img.src = url;
+  });
+}
+
+// 待ち受け画像の描画（リニューアル版）
+async function renderWallpaper(canvas, scale = 1) {
+  const W = 1080 * scale, H = 1920 * scale;
+  canvas.width = W; canvas.height = H;
+  const ctx = canvas.getContext('2d');
+
+  // ========= 配色 =========
+  const COL = {
+    bg1:        '#FBF1E8',
+    bg2:        '#FAE7DD',
+    pinkDeep:   '#A85D62',
+    pinkRose:   '#C9817F',
+    pinkSoft:   '#E5A5A2',
+    pinkBlush:  '#F2DCD7',
+    cream:      '#F8EBD3',
+    creamLight: '#FCF6EA',
+    text:       '#3F2E26',
+    textSoft:   '#6B5448',
+    muted:      '#998578',
+    accent:     '#B89368',
+  };
+
+  // ========= 背景 =========
+  const bg = ctx.createLinearGradient(0, 0, 0, H);
+  bg.addColorStop(0,    '#F8E9DD');
+  bg.addColorStop(0.18, '#FCF1E8');
+  bg.addColorStop(0.55, '#FBF0E6');
+  bg.addColorStop(1,    '#FAEFE2');
+  ctx.fillStyle = bg;
+  ctx.fillRect(0, 0, W, H);
+
+  // 水彩風のソフト円ブロブ
+  const softBlob = (x, y, r, color, alpha) => {
+    const g = ctx.createRadialGradient(x, y, 0, x, y, r);
+    g.addColorStop(0, color); g.addColorStop(1, 'rgba(255,255,255,0)');
+    ctx.globalAlpha = alpha;
+    ctx.fillStyle = g; ctx.beginPath(); ctx.arc(x, y, r, 0, Math.PI*2); ctx.fill();
+    ctx.globalAlpha = 1;
+  };
+  softBlob(W*0.18, 200*scale, 320*scale, '#F2DCD7', 0.55);
+  softBlob(W*0.85, 380*scale, 280*scale, '#F2DCD7', 0.4);
+  softBlob(W*0.15, H*0.95,    340*scale, '#F2DCD7', 0.42);
+
+  // ========= イラストロード =========
+  const [imgWoman, imgTea, imgFlower] = await Promise.all([
+    loadImage('illustrations/05_woman_back_cup_leaves.png').catch(()=>null),
+    loadImage('illustrations/02_teacup_book.png').catch(()=>null),
+    loadImage('illustrations/08_notebook_coffee.png').catch(()=>null),
+  ]);
+
+  // 右上：女性イラスト（背景に溶け込ませる）
+  if (imgWoman) {
+    const w = 560 * scale;
+    const h = w * (imgWoman.height / imgWoman.width);
+    ctx.globalAlpha = 0.95;
+    ctx.drawImage(imgWoman, W - w + 80*scale, 40*scale, w, h);
+    ctx.globalAlpha = 1;
+  }
+  // 左中：紅茶イラスト
+  if (imgTea) {
+    const w = 290 * scale;
+    const h = w * (imgTea.height / imgTea.width);
+    ctx.globalAlpha = 0.92;
+    ctx.drawImage(imgTea, -25*scale, 310*scale, w, h);
+    ctx.globalAlpha = 1;
+  }
+  // 左下：ノート＋コーヒー
+  if (imgFlower) {
+    const w = 260 * scale;
+    const h = w * (imgFlower.height / imgFlower.width);
+    ctx.globalAlpha = 0.92;
+    ctx.drawImage(imgFlower, -30*scale, H - h - 25*scale, w, h);
+    ctx.globalAlpha = 1;
+  }
+
+  ctx.textAlign = 'center';
+
+  // ========= ヘッダーテキスト =========
+  // 目標を叶える
+  ctx.fillStyle = COL.text;
+  ctx.font = `bold ${58*scale}px "Hiragino Mincho ProN","Yu Mincho",serif`;
+  ctx.fillText('目標を叶える', W/2, 230*scale);
+
+  // 7日間プラン (7 だけ大きく)
+  const sevenSize = 130 * scale;
+  const restSize  = 76 * scale;
+  ctx.fillStyle = COL.pinkDeep;
+  ctx.textAlign = 'left';
+  ctx.font = `bold ${sevenSize}px "Hiragino Mincho ProN","Yu Mincho",serif`;
+  const sevenW = ctx.measureText('7').width;
+  ctx.font = `bold ${restSize}px "Hiragino Mincho ProN","Yu Mincho",serif`;
+  const restW = ctx.measureText('日間プラン').width;
+  const totalW = sevenW + 14*scale + restW;
+  const titleX = (W - totalW) / 2;
+
+  ctx.font = `bold ${sevenSize}px "Hiragino Mincho ProN","Yu Mincho",serif`;
+  ctx.fillText('7', titleX, 365*scale);
+  ctx.font = `bold ${restSize}px "Hiragino Mincho ProN","Yu Mincho",serif`;
+  ctx.fillText('日間プラン', titleX + sevenW + 14*scale, 355*scale);
+
+  ctx.textAlign = 'center';
+
+  // 7 days plan (cursive)
+  ctx.fillStyle = COL.pinkRose;
+  ctx.font = `italic ${30*scale}px "Snell Roundhand","Apple Chancery","Brush Script MT","Lucida Handwriting",cursive`;
+  ctx.fillText('7 days plan', W/2, 415*scale);
+
+  // ゴールテキスト（em-dash で囲む）
+  let goalText;
+  if (state.satisfied || state.goal === 'maintain') {
+    goalText = "今のあなたを整える";
+  } else if (state.goal === 'habit') {
+    goalText = "食事と生活を整える";
+  } else {
+    const diff = +(state.weight - state.goalWeight).toFixed(1);
+    goalText = (diff > 0) ? `あと −${diff}kg を目指す` : "自分らしさを整える";
+  }
+  ctx.fillStyle = COL.text;
+  ctx.font = `${30*scale}px "Hiragino Mincho ProN",serif`;
+  ctx.fillText(`──    ${goalText}    ──`, W/2, 490*scale);
+
+  // ========= 7日カード =========
+  const days = generate7DayPlan(state);
+  const icons = ['♡', '🌿', '☽', '✿', '♪', '✦', '✧'];
+
+  const cardStartY = 555 * scale;
+  const cardH = 158 * scale;
+  const cardX = 55 * scale;
+  const cardW = W - 110 * scale;
+  const badgeW = 175 * scale;
+
+  // カード描画
+  days.forEach((d, i) => {
+    const y = cardStartY + i * cardH;
+
+    // カード背景（交互）
+    ctx.fillStyle = (i % 2 === 0) ? '#FFFFFF' : '#FBF1ED';
+    ctx.fillRect(cardX, y, cardW, cardH - 4*scale);
+
+    // 左バッジ（ピンクグラデ）
+    const bgg = ctx.createLinearGradient(cardX, y, cardX, y + cardH);
+    bgg.addColorStop(0, COL.pinkSoft);
+    bgg.addColorStop(1, COL.pinkRose);
+    ctx.fillStyle = bgg;
+    ctx.fillRect(cardX, y, badgeW, cardH - 4*scale);
+
+    // バッジ内テキスト
+    ctx.fillStyle = '#FFFFFF';
+    ctx.textAlign = 'center';
+    ctx.font = `bold ${19*scale}px "Hiragino Sans",sans-serif`;
+    ctx.fillText('DAY', cardX + badgeW/2, y + 36*scale);
+
+    ctx.font = `bold ${62*scale}px "Hiragino Mincho ProN",serif`;
+    ctx.fillText(`${i+1}`, cardX + badgeW/2, y + 100*scale);
+
+    ctx.font = `bold ${24*scale}px "Hiragino Mincho ProN",serif`;
+    ctx.fillText(d.title, cardX + badgeW/2 - 12*scale, y + 134*scale);
+    // アイコン
+    ctx.font = `${22*scale}px sans-serif`;
+    ctx.fillText(icons[i], cardX + badgeW/2 + 38*scale, y + 134*scale);
+
+    // === 右側コンテンツ ===
+    const contentX = cardX + badgeW + 18*scale;
+    const labelW = 56*scale;
+    const labelH = 32*scale;
+
+    // 食事ラベル
+    ctx.fillStyle = COL.cream;
+    ctx.fillRect(contentX, y + 28*scale, labelW, labelH);
+    ctx.fillStyle = COL.pinkDeep;
+    ctx.font = `bold ${17*scale}px "Hiragino Sans",sans-serif`;
+    ctx.textAlign = 'center';
+    ctx.fillText('食事', contentX + labelW/2, y + 49*scale);
+
+    // 食事テキスト
+    ctx.fillStyle = COL.text;
+    ctx.font = `${22*scale}px "Hiragino Sans",sans-serif`;
+    ctx.textAlign = 'left';
+    ctx.fillText(d.food, contentX + labelW + 18*scale, y + 49*scale);
+
+    // ドット仕切り
+    ctx.strokeStyle = '#D8C7B6';
+    ctx.lineWidth = 1*scale;
+    ctx.setLineDash([3*scale, 4*scale]);
+    ctx.beginPath();
+    ctx.moveTo(contentX, y + 80*scale);
+    ctx.lineTo(W - 78*scale, y + 80*scale);
+    ctx.stroke();
+    ctx.setLineDash([]);
+
+    // 生活ラベル
+    ctx.fillStyle = COL.cream;
+    ctx.fillRect(contentX, y + 92*scale, labelW, labelH);
+    ctx.fillStyle = COL.pinkDeep;
+    ctx.font = `bold ${17*scale}px "Hiragino Sans",sans-serif`;
+    ctx.textAlign = 'center';
+    ctx.fillText('生活', contentX + labelW/2, y + 113*scale);
+
+    // 生活テキスト
+    ctx.fillStyle = COL.text;
+    ctx.font = `${22*scale}px "Hiragino Sans",sans-serif`;
+    ctx.textAlign = 'left';
+    ctx.fillText(d.life, contentX + labelW + 18*scale, y + 113*scale);
+  });
+
+  // ========= フッター =========
+  ctx.textAlign = 'center';
+  // メイン引用
+  ctx.fillStyle = COL.text;
+  ctx.font = `italic ${28*scale}px "Hiragino Mincho ProN",serif`;
+  ctx.fillText('"なりたい自分は、今日のひと口から。"', W/2, H - 110*scale);
+  // サブ
+  ctx.fillStyle = COL.textSoft;
+  ctx.font = `${22*scale}px "Hiragino Sans",sans-serif`;
+  ctx.fillText('小さな積み重ねが、未来のあなたをつくります。 ♡', W/2, H - 65*scale);
+}
+
+// 現在のタイプを保持
+let currentType = null;
+
+// 画像モーダル表示
+function showImageModal(blob, filename) {
+  const url = URL.createObjectURL(blob);
+  const ua = navigator.userAgent;
+  const isIOS = /iPad|iPhone|iPod/.test(ua) || (ua.includes('Mac') && 'ontouchend' in document);
+  const isAndroid = /Android/i.test(ua);
+  const isMobile = isIOS || isAndroid;
+
+  let hint;
+  if (isIOS) {
+    hint = '<strong>📱 iPhoneで保存する方法</strong><br>① 下の画像を <strong>長押し</strong><br>② メニューから <strong>「写真に保存」</strong> をタップ<br>③ 写真アプリで開いて壁紙に設定';
+  } else if (isAndroid) {
+    hint = '<strong>📱 Androidで保存する方法</strong><br>① 下の画像を <strong>長押し</strong><br>② メニューから <strong>「画像をダウンロード」</strong> をタップ<br>③ ギャラリーから開いて壁紙に設定';
+  } else {
+    hint = '<strong>💻 PC で保存する方法</strong><br>「画像を保存」ボタンを押すか、画像を <strong>右クリック → 「名前を付けて画像を保存」</strong>';
+  }
+
+  const modal = document.createElement('div');
+  modal.className = 'img-modal';
+  modal.innerHTML = `
+    <div class="img-modal-inner">
+      <h3>あなたの 7日間プラン ❀</h3>
+      <div class="modal-hint">${hint}</div>
+      <img id="modal-img" src="${url}" alt="7日間プラン">
+      <div class="img-modal-actions">
+        <a class="img-modal-save" id="modal-save" href="${url}" download="${filename}">⤓ 画像を保存</a>
+        <button class="img-modal-close" id="modal-close">閉じる</button>
+      </div>
+    </div>
+  `;
+  document.body.appendChild(modal);
+  document.body.style.overflow = 'hidden';
+
+  const close = () => {
+    modal.remove();
+    document.body.style.overflow = '';
+    setTimeout(() => URL.revokeObjectURL(url), 1500);
+  };
+  modal.addEventListener('click', (e) => { if (e.target === modal) close(); });
+  modal.querySelector('#modal-close').addEventListener('click', close);
+}
+
+// ダウンロード機能
+async function downloadWallpaper() {
+  const btn = document.getElementById('ws-download');
+  const orig = btn.textContent;
+  btn.textContent = '⌛ 作成中…';
+  btn.disabled = true;
+  try {
+    const canvas = document.createElement('canvas');
+    await renderWallpaper(canvas, 1);
+    canvas.toBlob(async (blob) => {
+      const filename = `7day-plan-${state.diagnosisId}.png`;
+
+      // ① Web Share API（iOSで「写真に保存」のシェアシートが出る）
+      if (navigator.canShare) {
+        try {
+          const file = new File([blob], filename, { type: 'image/png' });
+          if (navigator.canShare({ files: [file] })) {
+            await navigator.share({ files: [file], title: '7日間プラン' });
+            btn.textContent = '✓ 完了';
+            setTimeout(() => { btn.textContent = orig; btn.disabled = false; }, 2200);
+            return;
+          }
+        } catch (e) {
+          // ユーザーがキャンセル → 続けてモーダル表示
+        }
+      }
+
+      // ② モーダルで画像表示（長押し保存・右クリック保存）
+      showImageModal(blob, filename);
+      btn.textContent = '✓ プレビュー表示';
+      setTimeout(() => { btn.textContent = orig; btn.disabled = false; }, 2200);
+    }, 'image/png');
+  } catch (e) {
+    btn.textContent = '⚠️ 失敗しました';
+    setTimeout(() => { btn.textContent = orig; btn.disabled = false; }, 2400);
+  }
+}
+
+// 診断ID生成（紛らわしい文字 0/O/1/I/L を除外）
+function generateDiagnosisId() {
+  const chars = "ABCDEFGHJKMNPQRSTUVWXYZ23456789";
+  let code = "MD-";
+  for (let i = 0; i < 6; i++) code += chars[Math.floor(Math.random() * chars.length)];
+  return code;
+}
+
+// クリップボードにコピー
+function copyCode() {
+  const code = document.getElementById('r-code-id').textContent;
+  const btn = document.getElementById('copy-btn');
+  const fallback = () => {
+    const ta = document.createElement('textarea');
+    ta.value = code; document.body.appendChild(ta); ta.select();
+    try { document.execCommand('copy'); } catch(e){}
+    document.body.removeChild(ta);
+  };
+  const showSuccess = () => {
+    btn.textContent = '✓ コピーしました！';
+    btn.classList.add('copied');
+    setTimeout(() => {
+      btn.textContent = '⧉ コードをコピー';
+      btn.classList.remove('copied');
+    }, 2200);
+  };
+  if (navigator.clipboard && window.isSecureContext) {
+    navigator.clipboard.writeText(code).then(showSuccess).catch(()=>{fallback(); showSuccess();});
+  } else { fallback(); showSuccess(); }
+}
+
+function selectOpt(el, key, val) {
+  state[key] = val;
+  const parent = el.parentElement;
+  parent.querySelectorAll('.opt').forEach(o => o.classList.remove('selected'));
+  el.classList.add('selected');
+}
+
+function toggleMulti(el, key, val) {
+  const arr = state[key];
+  const i = arr.indexOf(val);
+  if (i >= 0) { arr.splice(i, 1); el.classList.remove('selected'); }
+  else { arr.push(val); el.classList.add('selected'); }
+}
+
+function toggleSatisfy() {
+  state.satisfied = !state.satisfied;
+  const wrap = document.getElementById('satisfyWrap');
+  const box = document.getElementById('satisfyBox');
+  if (state.satisfied) {
+    wrap.classList.add('on'); box.textContent = '✓';
+    document.getElementById('goalWeight').value = '';
+    document.getElementById('goalWeight').disabled = true;
+  } else {
+    wrap.classList.remove('on'); box.textContent = '';
+    document.getElementById('goalWeight').disabled = false;
+  }
+}
+
+function goto(name) {
+  document.querySelectorAll('.screen').forEach(s => s.style.display = 'none');
+  document.getElementById('screen-' + name).style.display = 'block';
+  window.scrollTo(0, 0);
+}
+
+function initBirthdate() {
+  const ySel = document.getElementById('bYear');
+  const mSel = document.getElementById('bMonth');
+  const dSel = document.getElementById('bDay');
+  const now = new Date().getFullYear();
+  for (let y = now - 15; y >= now - 70; y--) {
+    const o = document.createElement('option'); o.value = y; o.textContent = y; ySel.appendChild(o);
+  }
+  for (let m = 1; m <= 12; m++) {
+    const o = document.createElement('option'); o.value = m; o.textContent = m; mSel.appendChild(o);
+  }
+  for (let d = 1; d <= 31; d++) {
+    const o = document.createElement('option'); o.value = d; o.textContent = d; dSel.appendChild(o);
+  }
+}
+
+function toStep2() {
+  const h = document.getElementById('height').value;
+  const w = document.getElementById('weight').value;
+  const y = document.getElementById('bYear').value;
+  const m = document.getElementById('bMonth').value;
+  const d = document.getElementById('bDay').value;
+  if (!h || !w || !y || !m || !d || state.exercise === null) {
+    document.getElementById('err1').style.display = 'block'; return;
+  }
+  document.getElementById('err1').style.display = 'none';
+  state.height = parseFloat(h);
+  state.weight = parseFloat(w);
+  state.birthYear = parseInt(y);
+  state.birthMonth = parseInt(m);
+  state.birthDay = parseInt(d);
+  goto('step2');
+}
+
+function toStep3() {
+  const gw = document.getElementById('goalWeight').value;
+  if ((!gw && !state.satisfied) || !state.goal) {
+    document.getElementById('err2').style.display = 'block'; return;
+  }
+  document.getElementById('err2').style.display = 'none';
+  state.goalWeight = state.satisfied ? state.weight : parseFloat(gw);
+  goto('step3');
+}
+
+function calculate() {
+  if (!state.q1 || !state.q2 || !state.q3 || state.foodTags.length === 0 || !state.concern) {
+    document.getElementById('err3').style.display = 'block'; return;
+  }
+  document.getElementById('err3').style.display = 'none';
+
+  // 軸計算
+  const ax1 = state.q1 === 'A' ? 0 : 1;
+  const ax2 = state.q2 === 'A' ? 0 : 1;
+  const heightM = state.height / 100;
+  const standardW = heightM * heightM * 22;
+  const diff = state.weight - standardW;
+  const ax3 = diff > 5 ? 1 : 0;
+  const ax4 = state.exercise === '0' ? 1 : 0;
+  const idx = ax1 * 8 + ax2 * 4 + ax3 * 2 + ax4;
+  const type = TYPES[idx];
+  currentType = type;
+
+  // 年齢
+  const today = new Date();
+  let age = today.getFullYear() - state.birthYear;
+  const md = (today.getMonth() + 1) * 100 + today.getDate();
+  const bmd = state.birthMonth * 100 + state.birthDay;
+  if (md < bmd) age--;
+
+  const bmi = (state.weight / (heightM * heightM)).toFixed(1);
+  const exLbl = ["ほぼしていない","週1〜2回","週3〜4回","週5回以上"][parseInt(state.exercise)];
+
+  // タイプ表示
+  document.getElementById('r-code').textContent = type.code;
+  document.getElementById('r-name').textContent = type.name;
+  const badges = document.getElementById('r-badges'); badges.innerHTML = '';
+  type.axes.forEach(a => { const s = document.createElement('span'); s.className = 'badge'; s.textContent = a; badges.appendChild(s); });
+
+  // 個別データ
+  document.getElementById('r-info').innerHTML = `
+    <div class="row"><span>年齢</span><b>${age}歳</b></div>
+    <div class="row"><span>身長 / 体重</span><b>${state.height}cm / ${state.weight}kg</b></div>
+    <div class="row"><span>BMI</span><b>${bmi}</b></div>
+    <div class="row"><span>運動量</span><b>${exLbl}</b></div>`;
+
+  // 目標カード
+  const goalDiff = +(state.weight - state.goalWeight).toFixed(1);
+  let goalText;
+  if (state.satisfied || state.goal === 'maintain') {
+    goalText = "今のあなたを大切に整える";
+  } else if (state.goal === 'habit') {
+    goalText = "食事と生活習慣を整える";
+  } else if (goalDiff > 0 && goalDiff < 10) {
+    goalText = `あと <span style="color:var(--rose-deep);font-size:22px;">−${goalDiff}kg</span> をめざす`;
+  } else if (goalDiff >= 10) {
+    goalText = `あと <span style="color:var(--rose-deep);font-size:22px;">−${goalDiff}kg</span> を一歩ずつ`;
+  } else if (goalDiff <= 0) {
+    goalText = "今のあなたを大切に整える";
+  } else {
+    goalText = "あなたらしい体を整える";
+  }
+  document.getElementById('r-goal-text').innerHTML = goalText;
+
+  // 特徴
+  const fl = document.getElementById('r-features'); fl.innerHTML = '';
+  type.features.forEach(f => { const li = document.createElement('li'); li.textContent = f; fl.appendChild(li); });
+
+  // 悩み
+  const con = CONCERNS[state.concern];
+  document.getElementById('r-concern-label').textContent = con.label;
+  document.getElementById('r-concern-text').textContent = con.text;
+
+  // 方法（目標タイプにより一部上書き）
+  const ml = document.getElementById('r-methods'); ml.innerHTML = '';
+  let methodList = type.methods.slice();
+  if (state.satisfied || state.goal === 'maintain') {
+    methodList = ["今の体型をキープする食習慣","代謝を落とさない生活リズム","年齢に合わせたメンテナンス"];
+  } else if (state.goal === 'habit') {
+    methodList = ["まず体の中を整えるリセット","続けられる食事の知識","無理のないペース設計"];
+  }
+  methodList.forEach(m => { const li = document.createElement('li'); li.textContent = m; ml.appendChild(li); });
+
+  // 問いかけ
+  document.getElementById('r-question').textContent = type.question;
+
+  // ご提案（カスタム文・HTML）
+  document.getElementById('r-proposal').innerHTML = buildProposal(type, goalDiff);
+
+  // 診断結果コード
+  state.diagnosisId = generateDiagnosisId();
+  document.getElementById('r-code-id').textContent = state.diagnosisId;
+
+  goto('result');
+
+  // プレビュー描画（縮小版）
+  setTimeout(() => {
+    const preview = document.getElementById('ws-preview');
+    if (preview) renderWallpaper(preview, 0.5).catch(()=>{});
+  }, 100);
+}
+
+function buildProposal(type, goalDiff) {
+  const isMaintain = state.satisfied || state.goal === 'maintain';
+  const isHabit = state.goal === 'habit';
+  const con = CONCERNS[state.concern];
+  const tags = state.foodTags || [];
+
+  // ===== 段落1：共感 =====
+  let p1;
+  if (isMaintain) {
+    p1 = `「<span class="ul">変わらなくていい</span>」と思える今の自分、素敵です。<br>でも、ふと「もう少し整えたいな」と思える日が、誰にでもあるもの。<br>そんな時のための<strong>選択肢</strong>を、知っておくのは悪くないと思いませんか。`;
+  } else if (isHabit) {
+    p1 = `「無理せず、ちゃんと整えたい」。<br>そう思えるあなたは、<strong>もう半分くらい変わり始めています</strong>。<br>あとは <span class="ul">正しい順序</span> を知るだけ。`;
+  } else if (goalDiff > 0 && goalDiff <= 3) {
+    p1 = `あと <strong class="big">−${goalDiff}kg</strong>。もう少しだからこそ、<span class="ul">焦りやモヤモヤ</span> が募る時もありますよね。<br>でも、ここからは「整え方」次第で、体は驚くほど軽やかに動いてくれます。`;
+  } else if (goalDiff > 3 && goalDiff <= 7) {
+    p1 = `<strong class="big">−${goalDiff}kg</strong>、ひとりで向き合うと <span class="ul">少し重たい数字</span> に感じるかもしれません。<br>でも、正しい順序があれば、思っているより遠くないんです。`;
+  } else if (goalDiff > 7) {
+    p1 = `<strong class="big">−${goalDiff}kg</strong> という目標を見て、<br>「本当にそこまで届くのかな」と思う日もあるかもしれません。<br>でも、たくさんの方が、同じ場所から少しずつ変わっていきました。<span class="ul">私もそのひとりです</span>。`;
+  } else {
+    p1 = `あなたの今の気持ち、すごく大事です。<br>その気持ちを <span class="ul">どう形にしていくか</span>、ここからが本番です。`;
+  }
+
+  // ===== 段落2：体が喜ぶ食べ方のコツ（タグ別） =====
+  let foodTip;
+  if (tags.includes('sweet')) {
+    foodTip = `<strong>甘いものが欲しくなる時</strong>、実は体は「タンパク質」を求めていることが多いんです。<br>次に手が伸びそうな時、まず <span class="ul">ゆで卵かナッツをひと口</span>。<br>それだけで、不思議と欲求がスッと収まることに気づくはずです。`;
+  } else if (tags.includes('oily')) {
+    foodTip = `<strong>揚げ物が好きな方</strong>のコツは「我慢」ではなく「<span class="ul">油を変える</span>」こと。<br>同じ脂っぽさでも、オリーブオイルや良質な油に切り替えると、体の重さがふっと軽くなります。`;
+  } else if (tags.includes('salty')) {
+    foodTip = `<strong>濃い味が好きな方</strong>は、塩分よりも「<span class="ul">だし</span>」を意識すると満足感が変わります。<br>出汁・お味噌・梅干しなど、和の旨味を活かすと、薄味でも物足りなさを感じにくくなります。`;
+  } else if (tags.length === 1 && tags[0] === 'balanced') {
+    foodTip = `すでにバランスを意識されているなら、次は「<strong>食べる順番</strong>」を変えてみてください。<br><span class="ul">野菜 → タンパク質 → 炭水化物</span> の順にするだけで、同じ食事でも結果が変わります。`;
+  } else {
+    foodTip = `まず意識してほしいのは「<strong>減らす</strong>」ではなく「<strong>足す</strong>」こと。<br>不足している栄養を補ってあげると、体は驚くほど答えてくれます。<br><span class="ul">タンパク質・お味噌汁・発酵食品</span> を、ひとつずつ毎日に。`;
+  }
+
+  const p2 = `<strong>体が喜ぶ食べ方</strong>、それは「我慢」ではなく「切り替え」です。<br>${foodTip}`;
+
+  // ===== 段落3：個別相談に出た方からのお声 =====
+  const voices = `
+    <div class="voices">
+      <span class="vt">VOICE ◆ 個別相談に出た方からのお声</span>
+
+      <div class="voice-card">
+        <img class="voice-avatar" src="illustrations/avatars/avatar_a.png" alt="">
+        <div class="voice-body">
+          <p class="voice-quote">最初は「話を聞くだけ」のつもりでしたが、自分の体について知らないことが多くて、目から鱗でした。押し付けが一切なく、自分のペースで考えられる時間でした。</p>
+        </div>
+      </div>
+
+      <div class="voice-card">
+        <img class="voice-avatar" src="illustrations/avatars/avatar_m.png" alt="">
+        <div class="voice-body">
+          <p class="voice-quote">忙しい中でも無理なくできる現実的なアドバイスをもらえて安心しました。相談が終わる頃には、次の一歩がスッと見えるようになっていました。</p>
+        </div>
+      </div>
+
+      <div class="voice-card">
+        <img class="voice-avatar" src="illustrations/avatars/avatar_y.png" alt="">
+        <div class="voice-body">
+          <p class="voice-quote">自分の体に向き合うきっかけになりました。私の生活に合わせた方法を一緒に考えてもらえて、希望が見えた感じです。話していて温かい気持ちになりました。</p>
+        </div>
+      </div>
+    </div>`;
+
+  // ===== 段落4：押し売りしない約束 =====
+  const note = `<span class="note">ご相談は、ただの「お話の時間」と思って受け取っていただいて大丈夫です。<br>あなたが「今」を整理するきっかけになれたら、それで十分です。</span>`;
+
+  return `<p>${p1}</p><p>${p2}</p>${voices}<p>${note}</p>`;
+}
+
+function restart() {
+  Object.keys(state).forEach(k => {
+    if (k === 'satisfied') state[k] = false;
+    else if (k === 'foodTags') state[k] = [];
+    else state[k] = null;
+  });
+  document.getElementById('height').value = '';
+  document.getElementById('weight').value = '';
+  document.getElementById('goalWeight').value = '';
+  document.getElementById('goalWeight').disabled = false;
+  document.getElementById('bYear').value = '';
+  document.getElementById('bMonth').value = '';
+  document.getElementById('bDay').value = '';
+  document.getElementById('satisfyWrap').classList.remove('on');
+  document.getElementById('satisfyBox').textContent = '';
+  document.querySelectorAll('.opt').forEach(o => o.classList.remove('selected'));
+  goto('start');
+}
+
+initBirthdate();
+</script>
+
+</body>
+</html>
