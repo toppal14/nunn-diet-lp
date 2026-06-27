@@ -36,16 +36,26 @@ body{font-family:'Noto Sans JP',sans-serif;background:var(--cream);color:var(--t
 .hdr .rule{width:32px;height:1px;background:var(--primary);margin:14px auto;}
 .hdr .sub{font-size:11px;color:var(--text-mute);letter-spacing:.15em;}
 
-/* DEMO BADGE */
-.demo-badge{background:var(--gold);color:#fff;font-size:10px;padding:3px 10px;border-radius:20px;letter-spacing:.1em;display:inline-block;margin-bottom:8px;}
-
 /* LOGIN */
-.login-card{background:var(--white);border-radius:16px;padding:32px 24px;text-align:center;border:1px solid var(--line);box-shadow:0 4px 20px rgba(168,102,70,.08);}
-.login-card h2{font-family:'Noto Serif JP',serif;font-size:16px;font-weight:400;color:var(--text);margin-bottom:8px;}
-.login-card p{font-size:12px;color:var(--text-mute);line-height:1.8;margin-bottom:24px;}
-.btn-demo{display:block;width:100%;padding:16px;border-radius:12px;background:var(--primary);color:#fff;font-size:15px;font-weight:500;border:none;cursor:pointer;font-family:'Noto Serif JP',sans-serif;letter-spacing:.1em;transition:.2s;}
-.btn-demo:hover{background:var(--primary-deep);}
-.demo-note{margin-top:16px;font-size:11px;color:var(--text-mute);background:var(--cream-deep);border-radius:8px;padding:10px 14px;text-align:left;line-height:1.7;}
+.login-screen{min-height:100vh;display:flex;flex-direction:column;}
+.login-hero{position:relative;width:100%;flex:1;}
+.login-hero img{width:100%;display:block;max-height:65vh;object-fit:cover;object-position:top;}
+.login-hero-fallback{background:linear-gradient(160deg,var(--cream) 0%,var(--cream-deep) 100%);min-height:55vh;display:flex;align-items:center;justify-content:center;flex-direction:column;text-align:center;padding:40px 24px;}
+.login-hero-fallback .eyebrow{font-size:11px;letter-spacing:.3em;color:var(--primary);margin-bottom:12px;display:block;}
+.login-hero-fallback h1{font-family:'Noto Serif JP',serif;font-size:22px;font-weight:500;color:var(--text);line-height:1.6;margin-bottom:8px;}
+.login-hero-fallback .sub{font-size:12px;color:var(--text-mute);line-height:1.8;}
+.login-btn-wrap{padding:20px 20px 12px;background:var(--white);}
+.btn-google{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;padding:15px;border-radius:12px;background:var(--navy);color:#fff;font-size:14px;font-weight:500;border:none;cursor:pointer;font-family:'Noto Sans JP',sans-serif;letter-spacing:.05em;transition:.2s;margin-bottom:10px;}
+.btn-google:hover{opacity:.88;}
+.btn-google svg{flex-shrink:0;}
+.google-merit{font-size:11px;color:var(--text-mute);text-align:center;margin-bottom:16px;line-height:1.7;}
+.divider-line{display:flex;align-items:center;gap:10px;margin-bottom:14px;}
+.divider-line span{font-size:11px;color:var(--text-mute);white-space:nowrap;}
+.divider-line::before,.divider-line::after{content:'';flex:1;height:1px;background:var(--line);}
+.btn-noauth{display:block;width:100%;padding:13px;border-radius:12px;background:var(--cream-deep);color:var(--text-mid);font-size:13px;font-weight:400;border:1.5px solid var(--line);cursor:pointer;font-family:'Noto Sans JP',sans-serif;transition:.2s;text-align:center;}
+.btn-noauth:hover{border-color:var(--primary-light);}
+.noauth-note{font-size:10.5px;color:var(--text-mute);text-align:center;margin-top:8px;line-height:1.7;padding:0 4px 20px;}
+.google-coming{display:inline-block;font-size:10px;background:var(--gold);color:#fff;padding:2px 8px;border-radius:20px;margin-left:6px;vertical-align:middle;}
 
 /* TOP BAR */
 .top-bar{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;padding-bottom:12px;border-bottom:1px solid var(--line);}
@@ -127,25 +137,30 @@ textarea::placeholder{color:var(--text-mute);font-size:12px;}
 
 <!-- LOGIN -->
 <div id="scr-login">
-<div class="app">
-  <div class="hdr">
-    <span class="demo-badge">DEMO VERSION</span><br>
-    <span class="eyebrow serif">NUN ACADEMY</span>
-    <h1>強み発見シート<br>× 初期設計AI</h1>
-    <div class="rule"></div>
-    <span class="sub">「この人じゃないとダメ」と選ばれるアカウントをつくる</span>
-  </div>
-  <div class="login-card">
-    <h2>デモを体験する</h2>
-    <p>入力内容はこのブラウザに保存されます。<br>どこからでも続きから書けるようにするには<br>Googleログイン連携が必要です。</p>
-    <button class="btn-demo" onclick="startDemo()">デモモードで始める</button>
-    <div class="demo-note">
-      💡 このデモ版では：<br>
-      ✓ シート全項目を入力できます<br>
-      ✓ ブラウザに自動保存されます<br>
-      ✓ AIぬんとの相談を体験できます<br>
-      ✗ 別デバイスからのアクセスはできません
+<div class="login-screen">
+  <!-- ヒーロー画像 -->
+  <div class="login-hero">
+    <img src="cover.png?v=2" alt="強み発見シート" onerror="this.style.display='none';document.getElementById('hero-fallback').style.display='flex';">
+    <div class="login-hero-fallback" id="hero-fallback" style="display:none;">
+      <span class="eyebrow serif">NUN ACADEMY</span>
+      <h1>「この人じゃないとダメ」と<br>思われるポジションの作り方と<br>強み発見シート</h1>
+      <span class="sub">選ばれる人だけが知っている！</span>
     </div>
+  </div>
+
+  <!-- ボタンエリア -->
+  <div class="login-btn-wrap">
+    <button class="btn-google" onclick="alert('Google連携は準備中です。現在はログインなしでご利用ください。')">
+      <svg width="18" height="18" viewBox="0 0 18 18"><path fill="#fff" d="M9 3.48c1.69 0 2.83.73 3.48 1.34l2.54-2.48C13.46.89 11.43 0 9 0 5.48 0 2.44 2.07.96 5.07l2.96 2.3C4.63 5.05 6.62 3.48 9 3.48z"/><path fill="#fff" d="M17.64 9.2c0-.74-.06-1.28-.19-1.84H9v3.34h4.96c-.1.83-.64 2.08-1.84 2.92l2.84 2.2c1.7-1.57 2.68-3.88 2.68-6.62z"/><path fill="#fff" d="M3.88 10.63A5.54 5.54 0 0 1 3.58 9c0-.56.1-1.1.27-1.62L.9 5.07A9 9 0 0 0 0 9c0 1.45.35 2.82.96 4.03l2.92-2.4z"/><path fill="#fff" d="M9 18c2.43 0 4.47-.8 5.96-2.18l-2.84-2.2c-.76.52-1.78.88-3.12.88-2.38 0-4.4-1.57-5.12-3.73L.88 13.03C2.36 15.94 5.48 18 9 18z"/></svg>
+      Googleでログインして始める
+      <span class="google-coming">準備中</span>
+    </button>
+    <p class="google-merit">✓ スマホ・PC どこからでも続きから書ける<br>✓ 入力内容がずっと保存される</p>
+
+    <div class="divider-line"><span>または</span></div>
+
+    <button class="btn-noauth" onclick="startDemo()">ログインせずにシートを始める</button>
+    <p class="noauth-note">※ このブラウザにのみ保存されます。別のデバイスからは見られません。</p>
   </div>
 </div>
 </div>
@@ -159,7 +174,7 @@ textarea::placeholder{color:var(--text-mute);font-size:12px;}
   </div>
 
   <div class="top-bar">
-    <span class="user-name">デモモード</span>
+    <span class="user-name">強み発見シート</span>
     <div style="display:flex;align-items:center;gap:12px;">
       <div class="save-status"><div class="save-dot" id="save-dot"></div><span id="save-label">保存済み</span></div>
       <button class="reset-btn" onclick="if(confirm('入力内容をすべてリセットしますか？'))resetAll()">リセット</button>
